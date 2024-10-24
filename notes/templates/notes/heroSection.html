@@ -1,0 +1,56 @@
+{% load static %}
+<div class="bg-gray-100 py-16">
+    <div class="container mx-auto px-4">
+        <!-- Hero Section -->
+        <div class="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
+            <!-- Text Content -->
+            <div class="w-full md:w-1/2 space-y-6">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight -mt-10">
+                    Share and Access Notes Effortlessly
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600">
+                    Welcome to the ultimate platform for sharing your knowledge and learning from others. Upload notes, browse through categories, and collaborate with a community of learners.
+                </p>
+                <a href="#" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg transition duration-300">Get Started</a>
+            </div>
+            <!-- Image -->
+            <div class="w-full md:w-1/2">
+                <img src="{% static 'notes/images/banner.jpg' %}" alt="Notes Sharing" class="w-full rounded-lg shadow-lg">
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-gray-800 text-center">Why Choose Our Platform?</h2>
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <img src="{% static 'notes/images/upload.png' %}" alt="Easy Upload" class="w-16 mx-auto mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Easy Upload</h3>
+                    <p class="text-gray-600 text-center">Upload your notes easily with just a few clicks. Share your knowledge with the world.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <img src="{% static 'notes/images/access-anywhere.png' %}" alt="Access Anywhere" class="w-16 mx-auto mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Access Anywhere</h3>
+                    <p class="text-gray-600 text-center">Access your notes from any device, anytime. Stay connected to your studies wherever you are.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <img src="{% static 'notes/images/community.png' %}" alt="Community Collaboration" class="w-16 mx-auto mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Community Collaboration</h3>
+                    <p class="text-gray-600 text-center">Engage with a community of learners. Collaborate, share ideas, and grow your knowledge.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Section -->
+        <div class="mt-16 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Join our community today</h2>
+            <p class="text-lg text-gray-600 mt-2">Sign up now and start sharing your knowledge with learners across the world.</p>
+            <a href="#" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg mt-4 transition duration-300">Sign Up Now</a>
+        </div>
+    </div>
+</div>
