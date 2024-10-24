@@ -66,10 +66,15 @@ def signout(request):
     return redirect('login')
 
 def profile(request):
-    return render(request, 'notes/profile.html')
+    section = request.GET.get('section', 'dashboard')
+    context = {
+        'section':section,
+    }
+    return render(request, 'notes/profile.html', context)
 
 def notes(request):
     return render(request, 'notes/notes.html')
 
 def notification(request):
     return render(request, 'notes/notification.html')
+
