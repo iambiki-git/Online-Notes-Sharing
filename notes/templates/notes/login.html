@@ -5,11 +5,17 @@
 <div class="flex items-center justify-center h-screen bg-gray-100">
     <!-- Login Card -->
     <div class="bg-white shadow-xl rounded-lg p-8 max-w-md w-full">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="bg-yellow-500 text-white p-3 rounded mb-4">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
         <!-- Logo / Title -->
         <h2 class="text-3xl font-bold text-gray-700 text-center mb-6">Welcome Back</h2>
 
         <!-- Form -->
         <form action="#" method="POST">
+            {% csrf_token %}
             <!-- Email -->
             <div class="mb-4">
                 <label for="email" class="block text-gray-600 text-sm font-bold mb-2">Email Address</label>
