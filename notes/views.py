@@ -64,3 +64,12 @@ def signout(request):
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
+
+def profile(request):
+    return render(request, 'notes/profile.html')
+
+def notes(request):
+    return render(request, 'notes/notes.html')
+
+def notification(request):
+    return render(request, 'notes/notification.html')

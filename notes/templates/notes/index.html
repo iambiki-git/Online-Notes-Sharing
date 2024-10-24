@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>{% block title %}Online Notes Sharing {% endblock %}</title>
-  </head>
-  <body class="light">
-    {% comment %} {% block searchbar %} {% include "notes/searchbar.html" %}{% endblock %} {% endcomment %}
-    {% block navbar %} {% include "notes/navbar.html" %}{% endblock %}
-    {% block heroSection %} {% include "notes/heroSection.html" %}{% endblock %}
-    {% block login %}{% endblock %}
-    {% block register %}{% endblock %}
-    {% block footer %} {% include "notes/footer.html" %}{% endblock %}
+{% extends "notes/base.html" %}
+{% load static %}
+{% block heroSection %} {% include "notes/heroSection.html" %}{% endblock %}
 
 
-    <script src="notes/js/scripts.js"></script>
-  </body>
-</html>
+
+
