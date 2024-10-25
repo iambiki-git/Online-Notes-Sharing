@@ -1,0 +1,250 @@
+{% extends "notes/index.html" %}
+{% load static %}
+{% block heroSection %}{% endblock %}
+{% block dashboard %}
+
+<div class="h-auto bg-zinc-900 text-slate-400 px-6 py-4 flex gap-4 hidden md:flex">
+    {% comment %} for desktop {% endcomment %}
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-zinc-900 h-full w-30 rounded shadow-2xl transition-all duration-300">
+        <div class="flex p-4 relative border-b border-gray-700">
+            <img src="{% static 'notes/images/userImage.jpg' %}" alt="userPhoto" class="h-9 w-9 object-cover rounded-full">
+            <div id="userInfo" class="px-2 text-sm">
+                <h3 class="font-bold">Bikram</h3>
+                <p style="font-size:11px;">gbikram4554@gmail.com</p>
+            </div>
+            <i id="toggleSidebar" class='bx bx-menu-alt-right absolute right-1 top-1 text-lg cursor-pointer'></i>
+        </div>
+        
+        <!-- Sidebar Links -->
+        <ul class="space-y-4 mt-6 px-4">
+            <li><a href="{% url 'dashboard' %}" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bxs-dashboard'></i><span class="sidebar-text">Dashboard</span></a></li>
+            <li><a href="?section=mynotes" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-book'></i><span class="sidebar-text">My Notes</span></a></li>
+            <li><a href="?section=myprofile" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-user'></i><span class="sidebar-text">My Profile</span></a></li>
+            <li><a href="#" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-cog'></i><span class="sidebar-text">Settings</span></a></li>
+            <li><a href="#" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-help-circle'></i><span class="sidebar-text">Help/Support</span></a></li>
+            <li><a href="#" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-log-out'></i><span class="sidebar-text">Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    {% comment %} <div class="bg-zinc-900 h-auto w-70 p-6 rounded shadow-2xl">
+        {% if section == 'mynotes' %}
+            {% include "notes/mynotes.html" %}
+        {% else %}
+        <h2 class="text-2xl font-semibold">Dashboard</h2>
+        <p class="mt-4">Welcome to your profile dashboard, Bikram!</p>
+        {% endif %}
+    </div> {% endcomment %}
+
+
+    <div class="bg-zinc-900 h-auto w-full md:w-70 lg:w-70 p-6 rounded shadow-2xl">
+        {% if section == 'mynotes' %}
+            {% include "notes/mynotes.html" %}
+        {% elif section == 'myprofile' %}
+            {% include "notes/myprofile.html" %}
+        {% else %}
+        <!-- Dashboard Overview -->
+        <h2 class="text-3xl font-semibold text-indigo-400">Dashboard</h2>
+        <p class="mt-4 text-gray-300">Welcome to your profile dashboard, Bikram!</p>
+    
+        <!-- Stats Section -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Notes Count -->
+            <a href="?section=mynotes">
+                <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                    <i class="bx bx-note text-4xl text-indigo-300"></i>
+                    <div class="ml-5">
+                        <h3 class="text-lg font-semibold text-indigo-200">My Notes</h3>
+                        <p class="mt-2 text-3xl font-extrabold text-indigo-400">15</p>
+                    </div>
+                </div>
+            </a>
+    
+            <!-- Downloads Count -->
+            <a href="">
+                <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                    <i class="bx bx-download text-4xl text-teal-300"></i>
+                    <div class="ml-5">
+                        <h3 class="text-lg font-semibold text-teal-200">Total Downloads</h3>
+                        <p class="mt-2 text-3xl font-extrabold text-teal-400">35</p>
+                    </div>
+                </div>
+            </a>
+    
+            <!-- Last Upload Info -->
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+                <i class="bx bx-upload text-4xl text-yellow-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-yellow-200">Last Uploaded Note</h3>
+                    <p class="mt-2 text-xl font-extrabold text-yellow-400">Operating Systems</p>
+                    <p class="text-gray-300 text-sm">Uploaded on Oct 20, 2024</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Additional Info Section -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Recent Activity -->
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+                <i class="bx bx-history text-4xl text-pink-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-pink-200">Recent Activity</h3>
+                    <p class="mt-2 text-gray-300">Edited "Database Management Notes" on Oct 22, 2024.</p>
+                </div>
+            </div>
+    
+            <!-- Most Downloaded Note -->
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+                <i class="bx bx-star text-4xl text-red-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-red-200">Most Downloaded Note</h3>
+                    <p class="mt-2 text-3xl font-extrabold text-red-400">Database Management</p>
+                    <p class="text-gray-300">20 Downloads</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+</div>
+
+
+
+{% comment %} for mobile devices {% endcomment %}
+<div class="h-auto bg-zinc-900 text-slate-400 flex flex-col gap-4 relative md:hidden">
+    <!-- Main Content -->
+    <div class="bg-zinc-900 h-auto w-full md:w-70 lg:w-70 p-6 rounded shadow-2xl">
+        {% if section == 'mynotes' %}
+            {% include "notes/mynotes.html" %}
+        {% elif section == 'myprofile' %}
+            {% include "notes/myprofile.html" %}
+        {% else %}
+        <!-- Dashboard Overview -->
+        <h2 class="text-3xl font-semibold text-indigo-400">Dashboard</h2>
+        <p class="mt-4 text-gray-300">Welcome to your profile dashboard, Bikram!</p>
+
+        <!-- Stats Section -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Notes Count -->
+            <a href="?section=mynotes">
+                <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                    <i class="bx bx-note text-4xl text-indigo-300"></i>
+                    <div class="ml-5">
+                        <h3 class="text-lg font-semibold text-indigo-200">My Notes</h3>
+                        <p class="mt-2 text-3xl font-extrabold text-indigo-400">15</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Downloads Count -->
+            <a href="">
+                <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                    <i class="bx bx-download text-4xl text-teal-300"></i>
+                    <div class="ml-5">
+                        <h3 class="text-lg font-semibold text-teal-200">Total Downloads</h3>
+                        <p class="mt-2 text-3xl font-extrabold text-teal-400">35</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Last Upload Info -->
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+                <i class="bx bx-upload text-4xl text-yellow-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-yellow-200">Last Uploaded Note</h3>
+                    <p class="mt-2 text-2xl font-extrabold text-yellow-400">Operating Systems</p>
+                    <p class="text-gray-300 text-sm">Uploaded on Oct 20, 2024</p>
+                </div>
+            </div>
+
+            <!-- Most Downloaded Note -->
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+                <i class="bx bx-star text-4xl text-red-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-red-200">Most Downloaded Note</h3>
+                    <p class="mt-2 text-2xl font-extrabold text-red-400">Database Management</p>
+                    <p class="text-gray-300">20 Downloads</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Cards Section -->
+        <div class="mt-8 grid grid-cols-1 gap-6">
+            <!-- My Profile -->
+            <a href="?section=myprofile" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                <i class="bx bx-user text-4xl text-blue-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-blue-200">My Profile</h3>
+                </div>
+            </a>
+
+            <!-- Settings -->
+            <a href="#" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                <i class="bx bx-cog text-4xl text-green-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-green-200">Settings</h3>
+                </div>
+            </a>
+
+            <!-- Help/Support -->
+            <a href="#" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                <i class="bx bx-help-circle text-4xl text-purple-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-purple-200">Help/Support</h3>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+</div>
+
+
+    
+
+
+
+<!-- Script for toggling sidebar -->
+<script>
+    const toggleSidebar = document.getElementById('toggleSidebar');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarTextElements = document.querySelectorAll('.sidebar-text');
+    const userInfo = document.getElementById('userInfo');
+
+    toggleSidebar.addEventListener('click', () => {
+        sidebar.classList.toggle('w-20');
+        sidebar.classList.toggle('w-1/4');
+
+        // Toggle text visibility based on sidebar width
+        if (sidebar.classList.contains('w-20')) {
+            sidebarTextElements.forEach(el => el.classList.add('hidden'));
+            userInfo.classList.add('hidden');
+        } else {
+            sidebarTextElements.forEach(el => el.classList.remove('hidden'));
+            userInfo.classList.remove('hidden');
+        }
+    });
+
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+
+    // Show sidebar
+    mobileToggle.addEventListener('click', () => {
+        mobileSidebar.classList.remove('-translate-x-full');
+    });
+
+    // Hide sidebar
+    closeMobileSidebar.addEventListener('click', () => {
+        mobileSidebar.classList.add('-translate-x-full');
+    });
+</script>
+
+{% endblock %}
+

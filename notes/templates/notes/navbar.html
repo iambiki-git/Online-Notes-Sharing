@@ -17,7 +17,7 @@
                 {% if not user.is_authenticated %}
                 <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Login</a></li>
                 {% else %}
-                <li><a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">View Profile</a></li>
+                <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">View Dashboard</a></li>
                 <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Logout</a></li>
                 {% endif %}
                 <li><a href="#" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Help/Support</a></li>
@@ -54,7 +54,7 @@
                     {% if not user.is_authenticated %}
                     <li><a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a></li>
                     {% else %}
-                    <li><a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-gray-100">View Profile</a></li>
+                    <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-100">View Dashboard</a></li>
                     <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
                     {% endif %}
                     <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Help/Support</a></li>

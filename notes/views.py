@@ -65,12 +65,12 @@ def signout(request):
     messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
 
-def profile(request):
+def dashboard(request):
     section = request.GET.get('section', 'dashboard')
     context = {
         'section':section,
     }
-    return render(request, 'notes/profile.html', context)
+    return render(request, 'notes/dashboard.html', context)
 
 def notes(request):
     return render(request, 'notes/notes.html')
