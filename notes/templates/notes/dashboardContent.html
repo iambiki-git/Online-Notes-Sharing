@@ -1,0 +1,93 @@
+{% load static %}
+ <!-- Main Content -->
+ <div class="bg-zinc-900 h-auto w-full w-70 p-6 rounded shadow-2xl">
+    
+    <!-- Dashboard Overview -->
+    <h2 class="text-3xl font-semibold text-indigo-400">Dashboard</h2>
+    <p class="mt-4 text-gray-300">Welcome to your profile dashboard, Bikram!</p>
+
+    <!-- Stats Section -->
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Notes Count -->
+        <a href="{% url 'mynotes' %}">
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                <i class="bx bx-note text-4xl text-indigo-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-indigo-200">My Notes</h3>
+                    <p class="mt-2 text-3xl font-extrabold text-indigo-400">15</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Downloads Count -->
+        <a href="">
+            <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+                <i class="bx bx-download text-4xl text-teal-300"></i>
+                <div class="ml-5">
+                    <h3 class="text-lg font-semibold text-teal-200">Total Downloads</h3>
+                    <p class="mt-2 text-3xl font-extrabold text-teal-400">35</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Last Upload Info -->
+        <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+            <i class="bx bx-upload text-4xl text-yellow-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-yellow-200">Last Uploaded Note</h3>
+                <p class="mt-2 text-xl font-extrabold text-yellow-400">Operating Systems</p>
+                <p class="text-gray-300 text-sm">Uploaded on Oct 20, 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Info Section -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Recent Activity -->
+        <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+            <i class="bx bx-history text-4xl text-pink-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-pink-200">Recent Activity</h3>
+                <p class="mt-2 text-gray-300">Edited "Database Management Notes" on Oct 22, 2024.</p>
+            </div>
+        </div>
+
+        <!-- Most Downloaded Note -->
+        <div class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition">
+            <i class="bx bx-star text-4xl text-red-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-red-200">Most Downloaded Note</h3>
+                <p class="mt-2 text-3xl font-extrabold text-red-400">Database Management</p>
+                <p class="text-gray-300">20 Downloads</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 md:hidden gap-6">
+        <!-- My Profile -->
+        <a href="{% url 'myprofile' %}" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+            <i class="bx bx-user text-4xl text-blue-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-blue-200">My Profile</h3>
+            </div>
+        </a>
+
+        <!-- Settings -->
+        <a href="#" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+            <i class="bx bx-cog text-4xl text-green-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-green-200">Settings</h3>
+            </div>
+        </a>
+
+        <!-- Help/Support -->
+        <a href="?section=helpSupport" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+            <i class="bx bx-help-circle text-4xl text-purple-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-purple-200">Help/Support</h3>
+            </div>
+        </a>
+    </div>
+   
+</div>
+

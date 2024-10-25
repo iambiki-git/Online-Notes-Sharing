@@ -78,3 +78,8 @@ def notes(request):
 def notification(request):
     return render(request, 'notes/notification.html')
 
+def myprofile(request):
+    return render(request, 'notes/myprofile.html')
+
+def mynotes(request):
+    return render(request, 'notes/mynotes.html')

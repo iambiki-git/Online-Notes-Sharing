@@ -3,9 +3,9 @@
 {% block heroSection %}{% endblock %}
 {% block dashboard %}
 
-<div class="h-auto bg-zinc-900 text-slate-400 px-6 py-4 flex gap-4 hidden md:flex">
+<div class="h-auto bg-zinc-900 text-slate-400 px-6 py-4 flex gap-4 md:flex">
     {% comment %} for desktop {% endcomment %}
-    <!-- Sidebar -->
+    {% comment %} <!-- Sidebar -->
     <div id="sidebar" class="bg-zinc-900 h-full w-30 rounded shadow-2xl transition-all duration-300">
         <div class="flex p-4 relative border-b border-gray-700">
             <img src="{% static 'notes/images/userImage.jpg' %}" alt="userPhoto" class="h-9 w-9 object-cover rounded-full">
@@ -22,27 +22,21 @@
             <li><a href="?section=mynotes" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-book'></i><span class="sidebar-text">My Notes</span></a></li>
             <li><a href="?section=myprofile" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-user'></i><span class="sidebar-text">My Profile</span></a></li>
             <li><a href="#" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-cog'></i><span class="sidebar-text">Settings</span></a></li>
-            <li><a href="#" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-help-circle'></i><span class="sidebar-text">Help/Support</span></a></li>
+            <li><a href="?section=helpSupport" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-help-circle'></i><span class="sidebar-text">Help/Support</span></a></li>
             <li><a href="#" class="flex items-center gap-4 py-2 px-4 rounded hover:bg-zinc-800 hover:text-yellow-300 transition"><i class='bx bx-log-out'></i><span class="sidebar-text">Logout</span></a></li>
         </ul>
-    </div>
-
-    <!-- Main Content -->
-    {% comment %} <div class="bg-zinc-900 h-auto w-70 p-6 rounded shadow-2xl">
-        {% if section == 'mynotes' %}
-            {% include "notes/mynotes.html" %}
-        {% else %}
-        <h2 class="text-2xl font-semibold">Dashboard</h2>
-        <p class="mt-4">Welcome to your profile dashboard, Bikram!</p>
-        {% endif %}
     </div> {% endcomment %}
 
+    {% include "notes/sidebar.html" %}
 
-    <div class="bg-zinc-900 h-auto w-full md:w-70 lg:w-70 p-6 rounded shadow-2xl">
+    {% comment %} <!-- Main Content -->
+    <div class="bg-zinc-900 h-auto w-full w-70 p-6 rounded shadow-2xl">
         {% if section == 'mynotes' %}
             {% include "notes/mynotes.html" %}
         {% elif section == 'myprofile' %}
             {% include "notes/myprofile.html" %}
+        {% elif section == 'helpSupport' %}
+            {% include "notes/helpSupport.html" %}
         {% else %}
         <!-- Dashboard Overview -->
         <h2 class="text-3xl font-semibold text-indigo-400">Dashboard</h2>
@@ -105,21 +99,23 @@
             </div>
         </div>
         {% endif %}
-    </div>
+    </div> {% endcomment %}
+
     
+    {% include "notes/dashboardContent.html" %}
+
 </div>
 
 
+ 
 
-{% comment %} for mobile devices {% endcomment %}
+
+{% comment %} for mobile devices
 <div class="h-auto bg-zinc-900 text-slate-400 flex flex-col gap-4 relative md:hidden">
+
     <!-- Main Content -->
     <div class="bg-zinc-900 h-auto w-full md:w-70 lg:w-70 p-6 rounded shadow-2xl">
-        {% if section == 'mynotes' %}
-            {% include "notes/mynotes.html" %}
-        {% elif section == 'myprofile' %}
-            {% include "notes/myprofile.html" %}
-        {% else %}
+        
         <!-- Dashboard Overview -->
         <h2 class="text-3xl font-semibold text-indigo-400">Dashboard</h2>
         <p class="mt-4 text-gray-300">Welcome to your profile dashboard, Bikram!</p>
@@ -189,29 +185,24 @@
             </a>
 
             <!-- Help/Support -->
-            <a href="#" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+            <a href="?section=helpSupport" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
                 <i class="bx bx-help-circle text-4xl text-purple-300"></i>
                 <div class="ml-5">
                     <h3 class="text-lg font-semibold text-purple-200">Help/Support</h3>
                 </div>
             </a>
         </div>
-        {% endif %}
+       
     </div>
-</div>
-
-
+</div> {% endcomment %}
 
 </div>
-
-
-    
 
 
 
 <!-- Script for toggling sidebar -->
 <script>
-    const toggleSidebar = document.getElementById('toggleSidebar');
+    {% comment %} const toggleSidebar = document.getElementById('toggleSidebar');
     const sidebar = document.getElementById('sidebar');
     const sidebarTextElements = document.querySelectorAll('.sidebar-text');
     const userInfo = document.getElementById('userInfo');
@@ -228,7 +219,7 @@
             sidebarTextElements.forEach(el => el.classList.remove('hidden'));
             userInfo.classList.remove('hidden');
         }
-    });
+    }); {% endcomment %}
 
 
     const mobileToggle = document.getElementById('mobileToggle');
