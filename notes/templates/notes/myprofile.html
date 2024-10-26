@@ -13,13 +13,14 @@
    
    
     {% comment %} myprofile main section {% endcomment %}
+    
     <div class="w-full w-70 p-8 bg-zinc-900 rounded-lg shadow-xl hover:shadow-2xl">
         <div class="flex flex-col md:flex-row items-center md:items-start">
             <img src="{% static 'notes/images/userImage.jpg' %}" alt="Profile Picture" class="w-20 h-20 rounded-full border-4 border-blue-500 shadow-md">
             <div class="md:ml-8 mt-4 md:mt-0">
-                <h2 class="text-3xl font-bold text-slate-300">Bikram</h2>
+                <h2 class="text-3xl font-bold text-slate-300">{{ request.user.first_name }}</h2>
                 <p class="text-slate-400 text-sm">
-                    Email: <span class="text-blue-500">gbikram4554@gmail.com</span>
+                    Email: <span class="text-blue-500">{{ request.user.email }}</span>
                     <i class='bx bxs-edit text-2xl md:text-xl cursor-pointer ml-2 hover:text-yellow-400' onclick="toggleEditForm()"></i>
                 </p>
             </div>

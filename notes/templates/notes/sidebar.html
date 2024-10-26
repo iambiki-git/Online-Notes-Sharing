@@ -4,8 +4,8 @@
     <div class="flex p-4 relative border-b border-gray-700">
         <img src="{% static 'notes/images/userImage.jpg' %}" alt="userPhoto" class="h-9 w-9 object-cover rounded-full">
         <div id="userInfo" class="px-2 text-sm">
-            <h3 class="font-bold">Bikram</h3>
-            <p style="font-size:11px;">gbikram4554@gmail.com</p>
+            <h3 class="font-bold">{{ request.user.first_name }}</h3>
+            <p style="font-size:11px;">{{ request.user.email }}</p>
         </div>
         <i id="toggleSidebar" class='bx bx-menu-alt-right absolute right-1 top-1 text-lg cursor-pointer'></i>
     </div>

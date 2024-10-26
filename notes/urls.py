@@ -1,5 +1,7 @@
 from django.urls import path
 from notes import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,4 +14,4 @@ urlpatterns = [
     path('dashboard/myprofile/', views.myprofile, name='myprofile'),
     path('dashboard/mynotes/', views.mynotes, name='mynotes'),
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

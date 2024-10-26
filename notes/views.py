@@ -74,7 +74,11 @@ def dashboard(request):
     return render(request, 'notes/dashboard.html', context)
 
 def notes(request):
-    return render(request, 'notes/notes.html')
+    notes = Note.objects.all().order_by('-upload_date')
+    content = {
+        'notes':notes,
+    }
+    return render(request, 'notes/notes.html', content)
 
 def notification(request):
     return render(request, 'notes/notification.html')
@@ -87,7 +91,7 @@ def mynotes(request):
         note_id = request.POST.get('note_id')
         faculty = request.POST.get('faculty').upper()
         subject = request.POST.get('subject').capitalize()
-        description = request.POST.get('description')
+        title = request.POST.get('title')
         file = request.FILES.get('file')
 
         # Check if we are updating an existing note
@@ -97,7 +101,7 @@ def mynotes(request):
                 mynote = Note.objects.get(id=note_id, author=request.user)
                 mynote.faculty = faculty
                 mynote.subject = subject
-                mynote.description = description
+                mynote.title = title
                 if file:
                     mynote.file = file
                 mynote.save()  # Save the updated note
@@ -110,7 +114,7 @@ def mynotes(request):
                 author=request.user,
                 faculty=faculty,
                 subject=subject,
-                description=description,
+                title=title,
                 file=file
             )
             messages.success(request, 'File uploaded successfully.')

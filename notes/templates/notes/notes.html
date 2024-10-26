@@ -16,14 +16,27 @@
 
     <!-- Notes Section -->
     <div id="notesContainer" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <!-- Note Card Example -->
         {% for note in notes %}
         <div class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out">
-            <h2 class="text-lg font-semibold text-slate-300 mb-2">{{ note.title }}</h2>
-            <p class="text-slate-400 text-sm mb-4">{{ note.description|truncatewords:20 }}</p>
+            <h2 class="text-lg font-semibold text-slate-300 mb-2">{{ note.faculty }}</h2>
+            <p class="text-slate-400 text-sm mb-4">{{ note.title|truncatewords:20 }}</p>
             <div class="flex justify-between items-center">
-                <a href="{% url 'note_detail' note.id %}" class="text-blue-400 hover:underline">Read More</a>
-                <p class="text-sm text-slate-500">{{ note.created_at|date:"M d, Y" }}</p>
+                <!-- Read More Link -->
+                <a href="{% if note.file %}{{ note.file.url }}{% else %}#{% endif %}" 
+                   class="text-blue-400 hover:underline"
+                   target="_blank">
+                   Read More
+                </a>
+                
+                <!-- Download Icon with Boxicon -->
+                <a href="{% if note.file %}{{ note.file.url }}{% else %}#{% endif %}" 
+                   download 
+                   class="text-blue-400 hover:text-blue-500 ml-2">
+                    <i class='bx bxs-download text-xl'></i>
+                </a>
+                
+                <!-- Upload Date -->
+                <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>
             </div>
         </div>
         {% empty %}
