@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from .models import Note
 
 # Create your views here.
 def index(request):
@@ -82,4 +83,28 @@ def myprofile(request):
     return render(request, 'notes/myprofile.html')
 
 def mynotes(request):
-    return render(request, 'notes/mynotes.html')
+    if request.method == 'POST':
+        faculty = request.POST.get('faculty').upper()
+        subject = request.POST.get('subject').capitalize()
+        description = request.POST.get('description')
+        file = request.FILES.get('file')
+
+        mynote = Note.objects.create(
+            author = request.user,
+            faculty = faculty,
+            subject = subject,
+            description = description,
+            file = file
+        )    
+
+        messages.success(request, 'File uploaded successfully.')
+        return redirect('mynotes')
+    
+    mynotes = Note.objects.filter(author=request.user).order_by('-upload_date')
+
+    content = {
+        'mynotes':mynotes,
+    }
+
+        
+    return render(request, 'notes/mynotes.html', content)

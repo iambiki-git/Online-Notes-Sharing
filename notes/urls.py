@@ -11,4 +11,5 @@ urlpatterns = [
     path('notification/', views.notification, name='notification'),
     path('dashboard/myprofile/', views.myprofile, name='myprofile'),
     path('dashboard/mynotes/', views.mynotes, name='mynotes'),
+    
 ]

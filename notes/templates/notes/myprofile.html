@@ -5,8 +5,106 @@
 
 
 {% block myprofile %}
-<div class="h-auto bg-zinc-900 text-slate-400 px-6 py-4 flex gap-4">
-    {% include "notes/sidebar.html" %}
-    {% include "notes/myprofileCode.html" %}
+<div class="h-auto bg-zinc-900 text-slate-400 px-6 py-4 flex gap-4 md:flex">
+
+    <div class="w-30">
+        {% include "notes/sidebar.html" %}
+    </div>
+   
+   
+    {% comment %} myprofile main section {% endcomment %}
+    <div class="w-full w-70 p-8 bg-zinc-900 rounded-lg shadow-xl hover:shadow-2xl">
+        <div class="flex flex-col md:flex-row items-center md:items-start">
+            <img src="{% static 'notes/images/userImage.jpg' %}" alt="Profile Picture" class="w-20 h-20 rounded-full border-4 border-blue-500 shadow-md">
+            <div class="md:ml-8 mt-4 md:mt-0">
+                <h2 class="text-3xl font-bold text-slate-300">Bikram</h2>
+                <p class="text-slate-400 text-sm">
+                    Email: <span class="text-blue-500">gbikram4554@gmail.com</span>
+                    <i class='bx bxs-edit text-2xl md:text-xl cursor-pointer ml-2 hover:text-yellow-400' onclick="toggleEditForm()"></i>
+                </p>
+            </div>
+        </div>
+
+        <!-- Extendable Form for Editing Profile -->
+        <div id="editProfileForm" class="mt-4 p-4 bg-zinc-900 rounded-lg shadow-lg hidden">
+            <h3 class="text-lg font-semibold text-slate-300">Edit Profile Information</h3>
+            <form>
+                <div class="mt-3">
+                    <label class="block text-slate-400 text-sm">Name</label>
+                    <input type="text" class="w-full p-2 mt-1 text-slate-200 bg-slate-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-500" value="Bikram">
+                </div>
+                <div class="mt-3">
+                    <label class="block text-slate-400 text-sm">Email</label>
+                    <input type="email" class="w-full p-2 mt-1 text-slate-200 bg-slate-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-500" value="gbikram4554@gmail.com">
+                </div>
+                <div class="mt-3">
+                    <label class="block text-slate-400 text-sm">Password</label>
+                    <input type="password" class="w-full p-2 mt-1 text-slate-200 bg-slate-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-500" value="12345">
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button type="button" onclick="toggleEditForm()" class="px-4 py-2 mr-2 text-sm font-semibold text-slate-300 border border-gray-500 rounded-lg hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Bio Section -->
+        <div class="mt-6">
+            <h3 class="text-xl font-semibold text-slate-300">Bio</h3>
+            <!-- Displayed Bio Text -->
+            <p id="bioText" class="mt-2 text-slate-400">
+                A brief description or bio goes here. Include your interests, skills, or any other information you'd like to share with others.
+                <i class='bx bxs-edit-alt cursor-pointer text-xl hover:text-yellow-400' onclick="toggleBio()"></i>
+            </p>
+            
+            <!-- Editable Bio Text Area (Initially Hidden) -->
+            <div id="bioEditForm" class="hidden">
+                <textarea id="bioInput" class="w-full px-4 py-5 md:py-2 border rounded-lg text-slate-300 bg-zinc-900">
+                A brief description or bio goes here. Include your interests, skills, or any other information you'd like to share with others.
+                </textarea>
+                <div class="flex space-x-2 mt-2">
+                    <button onclick="saveBio()" class="bg-indigo-500 text-white py-1 px-4 rounded hover:bg-indigo-400">Save</button>
+                    <button onclick="cancelBio()" class="bg-gray-300 text-gray-700 py-1 px-4 rounded hover:bg-gray-400">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div> 
+   
+
 </div>
+
+<script>
+    // for profile updation
+    function toggleEditForm() {
+        const form = document.getElementById('editProfileForm');
+        form.classList.toggle('hidden');  // Toggle visibility
+    } 
+
+    // for bio section
+     // Toggle edit form visibility
+     function toggleBio() {
+        document.getElementById('bioText').classList.toggle('hidden');
+        document.getElementById('bioEditForm').classList.toggle('hidden');
+    }
+
+    // Save edited bio
+    function saveBio() {
+        const bioInput = document.getElementById('bioInput').value;
+        document.getElementById('bioText').innerHTML = `
+            ${bioInput}
+            <i class='bx bxs-edit-alt cursor-pointer text-xl hover:text-yellow-400' onclick="toggleEditForm()"></i>
+        `;
+        toggleBio();
+    }
+
+    // Cancel editing and restore original bio
+    function cancelBio() {
+        toggleBio();
+    }
+</script>
 {% endblock %}
