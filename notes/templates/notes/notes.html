@@ -19,7 +19,8 @@
         {% for note in notes %}
         <div class="bg-zinc-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out">
             <h2 class="text-lg font-semibold text-slate-300 mb-2">{{ note.faculty }}</h2>
-            <p class="text-slate-400 text-sm mb-4">{{ note.title|truncatewords:20 }}</p>
+            <p class="text-slate-400 text-sm mb-4">Subject: {{ note.subject }}</p>
+            <p class="text-slate-400 text-sm mb-4">Title: {{ note.title|truncatewords:20 }}</p>
             <div class="flex justify-between items-center">
                 <!-- Read More Link -->
                 <a href="{% if note.file %}{{ note.file.url }}{% else %}#{% endif %}" 
@@ -43,6 +44,8 @@
         <p class="text-slate-400 col-span-full text-center mt-6">No notes found.</p>
         {% endfor %}
     </div>
+     {% comment %} <!-- No Results Found Message -->
+     <p id="noResultsMessage" class="text-slate-400 col-span-full text-center mt-6" style="display:none;">No results found.</p> {% endcomment %}
 
 </div>
 
@@ -51,17 +54,22 @@
     function searchNotes() {
         const searchQuery = document.getElementById('searchInput').value.toLowerCase();
         const notes = document.querySelectorAll('#notesContainer > div');
+       // let hasResults = false;
         
         notes.forEach(note => {
-            const title = note.querySelector('h2').textContent.toLowerCase();
-            const description = note.querySelector('p').textContent.toLowerCase();
+            const subject = note.querySelector('p').textContent.toLowerCase();
+            const title = note.querySelector('p').textContent.toLowerCase();
 
-            if (title.includes(searchQuery) || description.includes(searchQuery)) {
+            if (subject.includes(searchQuery) || title.includes(searchQuery)) {
                 note.style.display = "block";
+                //let hasResults = true;
+
             } else {
                 note.style.display = "none";
             }
         });
+        // Show "No results found" message if no notes match the search query
+       // document.getElementById('noResultsMessage').style.display = hasResults ? "none" : "block";
     }
 </script>
 {% endblock %}
