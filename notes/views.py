@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -84,27 +84,47 @@ def myprofile(request):
 
 def mynotes(request):
     if request.method == 'POST':
+        note_id = request.POST.get('note_id')
         faculty = request.POST.get('faculty').upper()
         subject = request.POST.get('subject').capitalize()
         description = request.POST.get('description')
         file = request.FILES.get('file')
 
-        mynote = Note.objects.create(
-            author = request.user,
-            faculty = faculty,
-            subject = subject,
-            description = description,
-            file = file
-        )    
-
-        messages.success(request, 'File uploaded successfully.')
+        # Check if we are updating an existing note
+        if note_id:
+            try:
+                # Fetch the specific Note object for editing
+                mynote = Note.objects.get(id=note_id, author=request.user)
+                mynote.faculty = faculty
+                mynote.subject = subject
+                mynote.description = description
+                if file:
+                    mynote.file = file
+                mynote.save()  # Save the updated note
+                messages.success(request, 'Note updated successfully.')
+            except Note.DoesNotExist:
+                messages.error(request, 'Note does not exist.')
+        else:
+            # Create a new note if note_id is not present
+            Note.objects.create(
+                author=request.user,
+                faculty=faculty,
+                subject=subject,
+                description=description,
+                file=file
+            )
+            messages.success(request, 'File uploaded successfully.')
+        
         return redirect('mynotes')
     
+    # Retrieve notes for the logged-in user
     mynotes = Note.objects.filter(author=request.user).order_by('-upload_date')
 
     content = {
-        'mynotes':mynotes,
+        'mynotes': mynotes,
     }
 
-        
     return render(request, 'notes/mynotes.html', content)
+
+
+        

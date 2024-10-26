@@ -32,7 +32,7 @@
                         <i class='bx bx-download text-2xl md:text-lg'></i>
                     </a>
                     <div class="flex space-x-2">
-                        <a href="#" onclick="openModal('edit', '{{ mynote.faculty }}', '{{ mynote.noteSubject }}', '{{ mynote.description }}')" class="text-indigo-400 hover:text-indigo-300 transition">
+                        <a href="#" onclick="openModal('edit', '{{ mynote.faculty }}', '{{ mynote.subject }}', '{{ mynote.description }}', '{{ mynote.id }}')" class="text-indigo-400 hover:text-indigo-300 transition">
                             <i class='bx bx-edit text-2xl md:text-lg'></i>
                         </a>
                         <a href="#" class="text-red-500 hover:text-red-400 transition">
@@ -60,30 +60,31 @@
         <!-- Modal Title -->
         <h3 id="modalTitle" class="text-xl font-bold mb-4">Add Note</h3>
 
-        <form method="POST">
+        <form id="noteForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            <input type="hidden" name="note_id" id="noteId" value="">
             <!-- Title Input -->
             <div class="mb-4">
                 <label for="faculty" class="block text-slate-400">Faculty</label>
-                <input type="text" name="faculty" id="faculty" class="w-full px-3 py-2 border rounded-lg bg-slate-300" placeholder="Enter faculty" required>
+                <input type="text" name="faculty" id="faculty" class="w-full px-3 py-2 border rounded-lg bg-slate-200" placeholder="Enter faculty" required>
             </div>
 
             <!-- Subject Input -->
             <div class="mb-4">
                 <label for="noteSubject" class="block text-slate-400">Subject</label>
-                <input type="text" name="subject" id="noteSubject" class="w-full px-3 py-2 border rounded-lg bg-slate-300" placeholder="Enter subject" required>
+                <input type="text" name="subject" id="subject" class="w-full px-3 py-2 border rounded-lg bg-slate-200" placeholder="Enter subject" required>
             </div>
 
             <!-- Content Input -->
             <div class="mb-4">
                 <label for="noteContent" class="block text-slate-400">Note Description</label>
-                <textarea id="description" name="description" class="w-full px-3 py-2 border rounded-lg bg-slate-300" rows="4" placeholder="Enter short description..." required></textarea>
+                <textarea id="description" name="description" class="w-full px-3 py-2 border rounded-lg bg-slate-200" rows="4" placeholder="Enter short description..." required></textarea>
             </div>
 
             <!-- File Upload (PDF Only) -->
             <div class="mb-4">
                 <label for="file" class="block text-slate-400">File (pdf only)</label>
-                <input type="file" name="file" id="file" class="w-full px-3 py-2 border rounded-lg bg-slate-300" accept="application/pdf" required>
+                <input type="file" name="file" id="file" class="w-full px-3 py-2 border rounded-lg bg-slate-200" accept="application/pdf" required>
             </div>
 
             <!-- Action Buttons -->
@@ -97,7 +98,7 @@
 
 <script>
     // Open Modal for Add or Edit based on argument
-    function openModal(action, faculty = '', subject = '', description = '') {
+    function openModal(action, faculty = '', subject = '', description = '', noteId = '') {
         const modalTitle = document.getElementById("modalTitle");
         const saveButton = document.getElementById("saveButton");
 
@@ -108,17 +109,20 @@
             
             //fill the form with the exsisting note details
             document.getElementById("faculty").value = faculty;
-            document.getElementById("noteSubject").value = subject;
+            document.getElementById("subject").value = subject;
             document.getElementById("description").value = description;
+            document.getElementById("noteId").value = noteId;
 
         } else {
             modalTitle.textContent = "Add Note";
             saveButton.textContent = "Save";
+            
 
             document.getElementById("faculty").value = '';
-            document.getElementById("noteSubject").value = '';
+            document.getElementById("subject").value = '';
             document.getElementById("description").value = '';
             document.getElementById("file").value = '';
+            document.getElementById("noteId").value = '';
         }
 
         // Show the modal
