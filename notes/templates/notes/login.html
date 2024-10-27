@@ -2,7 +2,7 @@
 {% load static %}
 {% block heroSection %}{% endblock %}
 {% block login %}
-<div class="flex items-center justify-center h-screen bg-zinc-900">
+<div class="flex items-center justify-center h-screen bg-zinc-900 -mt-24 md:-mt-10">
     <!-- Login Card -->
     <div class="bg-zinc-900 shadow-xl rounded-lg p-8 max-w-md w-full">
         <!-- Logo / Title -->
@@ -44,21 +44,6 @@
                 </button>
             </div>
         </form>
-
-        <!-- Divider -->
-        <div class="my-6 text-center text-slate-400">
-            <span>OR</span>
-        </div>
-
-        <!-- Social Login Buttons -->
-        <div class="flex flex-col gap-3">
-            <button class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out">
-                Continue with Facebook
-            </button>
-            <button class="w-full py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition duration-150 ease-in-out">
-                Continue with Google
-            </button>
-        </div>
 
         <!-- Signup Link -->
         <p class="text-center text-sm text-slate-400 mt-6">

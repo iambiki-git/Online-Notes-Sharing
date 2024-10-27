@@ -1,10 +1,13 @@
 {% load static %}
 
 <nav class="sticky top-0 z-50 h-24 flex items-center justify-between px-6 shadow-lg bg-zinc-900">
+
     <a href="/">
-        <h2 class="text-xl md:text-3xl font-bold text-yellow-300 font-serif">Online Notes Sharing</h2>
-        <p class="text-medium font-bold text-slate-300">System</p>
+        <h2 class="text-3xl font-bold text-white font-serif scale-animation">
+            note<span class="text-blue-500">Hub
+        </h2>
     </a>
+    
 
     <!-- Desktop Menu -->
     <ul class="hidden md:flex md:items-center md:gap-6 md:text-slate-400 md:text-lg font-mono">
@@ -21,7 +24,7 @@
                 <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Dashboard</a></li>
                 <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Logout</a></li>
                 {% endif %}
-                <li><a href="#" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Help/Support</a></li>
+                <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Help/Support</a></li>
             </ul>
         </li>
     </ul>
@@ -56,13 +59,34 @@
                     <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a></li>
                     <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
                     {% endif %}
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Help/Support</a></li>
+                    <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:bg-gray-100">Help/Support</a></li>
                 </ul>
             </li>
         </ul>
     </div>
 </nav> 
 
+<style>
+    @keyframes scaleFromPoint {
+        0% {
+            transform: scale(0); /* Start from small */
+            opacity: 0; /* Start invisible */
+        }
+        50% {
+            opacity: 1; /* Fully visible */
+        }
+        100% {
+            transform: scale(1); /* End at original size */
+        }
+    }
+    
+    .scale-animation {
+        display: inline-block; /* Ensure it can be transformed properly */
+        animation: scaleFromPoint 1.5s forwards; /* Apply animation */
+        animation-iteration-count: once; /* Repeat the animation */
+    }
+    
+</style>
 
 <script>
     const profileLink = document.getElementById('profileLink');
@@ -104,3 +128,5 @@
         }
     });
 </script>
+
+

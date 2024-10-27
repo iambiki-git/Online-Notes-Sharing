@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from .models import Note, Bio, UserInfo
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):
@@ -22,7 +23,7 @@ def signin(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "You are now logged in.")
-                return redirect('dashboard')
+                return redirect('index')
             else:
                 messages.error(request, 'Invalid email or password')
         except User.DoesNotExist:
@@ -101,10 +102,16 @@ def dashboard(request):
 
 def notes(request):
     notes = Note.objects.all().order_by('-upload_date')
+
+    paginator = Paginator(notes, 16)  # Show 10 notes per page
+    page_number = request.GET.get('page')
+    notes = paginator.get_page(page_number)
+
     content = {
         'notes':notes,
     }
     return render(request, 'notes/notes.html', content)
+
 
 def notification(request):
     return render(request, 'notes/notification.html')
@@ -216,6 +223,11 @@ def mynotes(request):
     # Retrieve notes for the logged-in user
     mynotes = Note.objects.filter(author=request.user).order_by('-upload_date')
 
+    # Pagination
+    paginator = Paginator(mynotes, 9)  # Show 10 notes per page
+    page_number = request.GET.get('page')  # Get the current page number from the URL
+    mynotes = paginator.get_page(page_number)  # Get the notes for the current page
+
     context = {
         'mynotes': mynotes,
     }
@@ -250,10 +262,21 @@ def download_note(request, note_id):
         response = HttpResponse(note.file, content_type='application/pdf')  # Adjust content type if needed
         response['Content-Disposition'] = f'attachment; filename="{note.file.name}"'
         return response
-    
-        
+     
     else:
         return HttpResponse("File not found.", status=404)  # Handle the case where the file does not exist
 
-   
+from django.http import FileResponse
+def note_preview(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
     
+    if note.file:
+        response = FileResponse(note.file, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="preview.pdf"'
+        return response
+    
+    return redirect('notes')
+
+    
+def help_support(request):
+    return render(request, 'notes/helpSupport.html')

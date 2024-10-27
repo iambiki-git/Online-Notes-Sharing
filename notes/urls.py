@@ -16,6 +16,8 @@ urlpatterns = [
     path('dashboard/update-bio/', views.update_bio, name='update_bio'),
     path('dashboard/delete_note/<int:note_id>/', views.delete_note, name='delete_note'),
     path('download/<int:note_id>/', views.download_note, name='download_note'),
+    path('note_preview/<int:note_id>/', views.note_preview, name='note_preview'),
+    path('help_support/', views.help_support, name='help_support'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

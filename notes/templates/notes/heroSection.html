@@ -1,117 +1,124 @@
 {% load static %}
 
-<!-- Hero Section with Dark Theme using Tailwind CSS -->
-<div class="h-screen -mt-24 md:-mt-8 flex flex-col justify-center items-center bg-zinc-900 text-white px-6">
-    <div class="text-center space-y-6 max-w-2xl">
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold animate-fadeIn mb-4">
-            Discover & Share Knowledge
+<!-- Include AOS CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/aos@next/dist/aos.js"></script>
+
+<!-- Hero Section -->
+<div class="relative bg-zinc-900 text-white py-16 md:py-28 overflow-hidden" data-aos="fade-up">
+    <div class="container mx-auto text-center px-4 relative z-10">
+        <h1 class="font-bold mb-4">
+            <span class="text-4xl">Share Your</span> <span class="text-6xl text-pink-400">Knowledge</span> <span class="text-7xl">Seamlessly</span>
         </h1>
-        <p class="text-lg md:text-2xl font-light animate-fadeIn delay-100">
-            Elevate your learning experience by connecting with a community passionate about sharing insights.
+        <p class="text-lg md:text-2xl font-light mb-6">
+            Join a vibrant community of learners and educators, sharing notes and resources to enhance learning.
         </p>
-        <a href="#" class="mt-6 inline-block bg-yellow-500 hover:bg-yellow-600 py-3 px-8 rounded-lg text-lg font-semibold animate-pulse">
-            Get Started Now
+        <a href="#features" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-3 px-8 rounded-lg text-lg font-semibold transition duration-200">
+            Start Sharing
         </a>
     </div>
 </div>
 
-<!-- Additional Information Sections -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-12 bg-zinc-900 text-white -mt-28">
-    
-    <!-- Section 1 -->
-    <div class="p-8 bg-zinc-800 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-        <h2 class="text-2xl font-bold mb-4 text-yellow-500">Upload with Ease</h2>
-        <p class="text-lg font-light">
-            Seamlessly upload your notes and resources, making them accessible to learners across the world. Join a network that values sharing.
-        </p>
-    </div>
+<!-- Features Section -->
+ 
+<div id="features" class="relative bg-zinc-900 py-16 overflow-hidden">
+    <div class="container mx-auto px-4 relative z-10">
+        <h2 class="text-4xl font-bold text-center text-yellow-500 mb-12" data-aos="zoom-in">Why Use Our Platform?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-aos="fade-right">
+                <h3 class="text-xl text-slate-500 font-semibold mb-2">Easy Uploads</h3>
+                <p class="text-gray-300">Quickly upload your notes with user-friendly interfaces and share them with the community in just a few clicks.</p>
+            </div>
 
-    <!-- Section 2 -->
-    <div class="p-8 bg-zinc-800 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-        <h2 class="text-2xl font-bold mb-4 text-yellow-500">Engage & Connect</h2>
-        <p class="text-lg font-light">
-            Collaborate with like-minded individuals. Explore, comment, and expand your learning journey with interactive features.
-        </p>
+            <!-- Feature 2 -->
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-xl text-slate-500 font-semibold mb-2">Collaborative Learning</h3>
+                <p class="text-gray-300">Engage with peers and learn collaboratively through shared resources, discussions, and group projects.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-aos="fade-left" data-aos-delay="200">
+                <h3 class="text-xl text-slate-500 font-semibold mb-2">Access Anywhere</h3>
+                <p class="text-gray-300">Access your notes from any device, anywhere, and at any time. Your learning, your way.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-xl text-slate-500 font-semibold mb-2">Interactive Resources</h3>
+                <p class="text-gray-300">Utilize interactive tools and features that enhance your learning experience and facilitate knowledge sharing.</p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="bg-zinc-800 p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-aos="fade-down" data-aos-delay="400">
+                <h3 class="text-xl text-slate-500 font-semibold mb-2">User-Friendly Interface</h3>
+                <p class="text-gray-300">Navigate our platform effortlessly with an intuitive design tailored for students and educators alike.</p>
+            </div>
+        </div>
     </div>
 </div>
 
-
-
-
-<style>
-    @keyframes fadeIn {
-        0% { opacity: 0; transform: translateY(-10px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    .animate-fadeIn {
-        animation: fadeIn 2s ease-in-out;
-    }
-    
-    .animate-bounce {
-        animation: bounce 2s infinite;
-    }
-    
-    .delay-200 {
-        animation-delay: 0.2s;
-    }
-    
-    
-</style>
-
-{% comment %} 
-<div class="bg-zinc-900 py-20">
-    <div class="container mx-auto px-4">
-        <!-- Hero Section -->
-        <div class="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
-            <!-- Text Content -->
-            <div class="w-full md:w-1/2 space-y-6">
-                <h1 class="text-4xl md:text-5xl font-bold text-slate-300 leading-tight -mt-16">
-                    Share and Access Notes Effortlessly
-                </h1>
-                <p class="text-lg md:text-xl text-gray-400">
-                    Welcome to the ultimate platform for sharing your knowledge and learning from others. Upload notes, browse through categories, and collaborate with a community of learners.
-                </p>
-                <a href="#" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg transition duration-300">Get Started</a>
-            </div>
-            <!-- Image -->
-            <div class="w-full md:w-1/2">
-                <img src="{% static 'notes/images/banner.jpg' %}" alt="Notes Sharing" class="w-full rounded-lg shadow-lg">
-            </div>
-        </div>
-
-        <!-- Features Section -->
-        <div class="mt-16">
-            <h2 class="text-3xl font-bold text-slate-300 text-center">Why Choose Our Platform?</h2>
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                    <img src="{% static 'notes/images/upload.png' %}" alt="Easy Upload" class="w-16 mx-auto mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Easy Upload</h3>
-                    <p class="text-gray-600 text-center">Upload your notes easily with just a few clicks. Share your knowledge with the world.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                    <img src="{% static 'notes/images/access-anywhere.png' %}" alt="Access Anywhere" class="w-16 mx-auto mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Access Anywhere</h3>
-                    <p class="text-gray-600 text-center">Access your notes from any device, anytime. Stay connected to your studies wherever you are.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                    <img src="{% static 'notes/images/community.png' %}" alt="Community Collaboration" class="w-16 mx-auto mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Community Collaboration</h3>
-                    <p class="text-gray-600 text-center">Engage with a community of learners. Collaborate, share ideas, and grow your knowledge.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call to Action Section -->
-        <div class="mt-16 text-center">
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-300">Join our community today</h2>
-            <p class="text-lg text-slate-400 mt-2">Sign up now and start sharing your knowledge with learners across the world.</p>
-            <a href="#" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg mt-4 transition duration-300">Sign Up Now</a>
-        </div>
+<!-- Community Section -->
+<div class="relative bg-zinc-900 py-16 overflow-hidden">
+    <div class="container mx-auto text-center px-4 relative z-10">
+        <h2 class="text-4xl font-bold text-yellow-500 mb-4" data-aos="slide-up">Join Our Community</h2>
+        <p class="text-lg text-gray-300 mb-6" data-aos="fade-up" data-aos-delay="100">
+            Connect with like-minded individuals who share your passion for learning and sharing knowledge. Participate in forums and discussions to enrich your understanding.
+        </p>
+        <a href="#" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+            Become a Member
+        </a>
     </div>
-</div> {% endcomment %}
+</div>
+
+<!-- Resources Section -->
+<div class="relative bg-zinc-900 py-16 overflow-hidden">
+    <div class="container mx-auto text-center px-4 relative z-10">
+        <h2 class="text-4xl font-bold text-yellow-500 mb-4" data-aos="flip-left">Explore Our Resources</h2>
+        <p class="text-lg text-gray-300 mb-6" data-aos="fade-up" data-aos-delay="100">
+            Dive into a wealth of educational materials contributed by our community members, from notes to study guides and more.
+        </p>
+        <a href="#" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+            View Resources
+        </a>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="relative bg-zinc-900 py-16 overflow-hidden">
+    <div class="container mx-auto text-center px-4 relative z-10">
+        <h2 class="text-4xl font-bold text-yellow-500 mb-4" data-aos="zoom-in">What Our Users Say</h2>
+        <p class="text-lg text-gray-300 mb-6" data-aos="fade-up" data-aos-delay="100">
+            "This platform has transformed the way I share and learn from notes. A game-changer for students!" - <strong>User Testimonial</strong>
+        </p>
+        <p class="text-lg text-gray-300 mb-6" data-aos="fade-up" data-aos-delay="200">
+            "The community is amazing, and the resources available have been incredibly helpful." - <strong>Another User</strong>
+        </p>
+        <a href="#" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+            Read More Testimonials
+        </a>
+    </div> 
+</div>
+
+<!-- About Section -->
+<div class="relative bg-zinc-900 py-16 overflow-hidden">
+    <div class="container mx-auto text-center px-4 relative z-10">
+        <h2 class="text-4xl font-bold text-yellow-500 mb-4" data-aos="fade-down">About Us</h2>
+        <p class="text-lg text-gray-300 mb-6" data-aos="fade-up" data-aos-delay="100">
+            Our mission is to create an accessible platform for students and educators to share and enhance knowledge through collaborative learning.
+        </p>
+        <a href="#" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+            Learn More
+        </a>
+    </div>
+    <!-- Wavy border at the bottom of the about section -->
+    <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,60 L40,40 L80,80 L120,30 L160,70 L200,10 L240,90 L280,50 L320,60 L360,20 L400,80 L440,40 L480,90 L520,20 L560,70 L600,10 L640,60 L680,0 L720,50 L760,30 L800,70 L840,10 L880,60 L920,20 L960,90 L1000,40 L1040,80 L1080,10 L1120,60 L1160,0 L1200,50 L1240,20 L1280,70 L1320,10 L1360,50 L1400,0 L1440,50 L1440 100 L0 100 Z" fill="#27272a"></path>
+    </svg>
+    
+</div>
+
+<!-- Include AOS Initialization Script -->
+<script>
+    AOS.init();
+</script>

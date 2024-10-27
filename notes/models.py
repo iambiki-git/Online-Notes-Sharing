@@ -23,10 +23,6 @@ class UserInfo(models.Model):
     def __str__(self):
         return self.author.username
     
-    # def addActivity(self, activity):
-    #     self.recent_activity += f"{activity}"
-    #     self.save()
-
 
 class Bio(models.Model):
     author = models.OneToOneField(User, on_delete=models.CASCADE)

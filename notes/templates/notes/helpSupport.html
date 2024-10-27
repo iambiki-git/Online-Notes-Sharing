@@ -1,1 +1,93 @@
-this is help support page.
+{% extends "notes/base.html" %}
+{% load static %}
+{% block heroSection %}{% endblock %}
+{% block dashboard %}{% endblock %}
+{% block helpSupport %}
+<div class="bg-zinc-900 text-white py-7 md:py-10">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-8">Help and Support</h1>
+        <div class="flex flex-col md:flex-row">
+            <!-- Sidebar Navigation -->
+            <div class="md:w-1/4 bg-zinc-800 rounded-lg shadow-md mb-6 md:mb-0">
+                <h2 class="text-2xl font-semibold p-4 border-b border-zinc-600">Navigation</h2>
+                <ul class="space-y-2 p-4">
+                    <li><a href="#faqs" class="text-blue-400 hover:underline">FAQs</a></li>
+                    <li><a href="#contact" class="text-blue-400 hover:underline">Contact Support</a></li>
+                    <li><a href="#feedback" class="text-blue-400 hover:underline">Feedback</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="md:w-3/4 md:pl-6">
+                <!-- FAQs Section -->
+                <div id="faqs" class="bg-zinc-800 p-6 rounded-lg shadow-md mb-6" data-aos="fade-up">
+                    <h2 class="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
+                    <div class="space-y-4">
+                        <div class="border-b pb-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                            <h3 class="font-medium text-lg">How do I upload a note?</h3>
+                            <p class="text-gray-300">To upload a note, go to the 'My Notes' section and click the 'Upload' button. Follow the prompts to select your file and add relevant details.</p>
+                        </div>
+                        <div class="border-b pb-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="font-medium text-lg">Can I share my notes with others?</h3>
+                            <p class="text-gray-300">Yes, you can share your notes with others using the sharing link provided after uploading your note.</p>
+                        </div>
+                        <div class="border-b pb-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                            <h3 class="font-medium text-lg">What types of files can I upload?</h3>
+                            <p class="text-gray-300">You can upload PDF files, as well as image files in JPG and PNG formats.</p>
+                        </div>
+                        <div class="border-b pb-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+                            <h3 class="font-medium text-lg">How do I delete a note?</h3>
+                            <p class="text-gray-300">To delete a note, navigate to the 'My Notes' section, find the note you want to delete, and click the 'Delete' button next to it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Support Section -->
+                <div id="contact" class="bg-zinc-800 p-6 rounded-lg shadow-md mb-6" data-aos="fade-up">
+                    <h2 class="text-3xl font-semibold mb-4">Contact Support</h2>
+                    <form action="" method="post" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <label for="name" class="block text-gray-300">Your Name</label>
+                            <input type="text" name="name" id="name" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-300">Your Email</label>
+                            <input type="email" name="email" id="email" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-300">Message</label>
+                            <textarea name="message" id="message" rows="4" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Feedback Section -->
+                <div id="feedback" class="bg-zinc-800 p-6 rounded-lg shadow-md" data-aos="fade-up">
+                    <h2 class="text-3xl font-semibold mb-4">Feedback and Suggestions</h2>
+                    <form action="" method="post" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <label for="feedback" class="block text-gray-300">Your Feedback</label>
+                            <textarea name="feedback" id="feedback" rows="4" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add AOS (Animate On Scroll) Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800, // Animation duration
+        easing: 'ease-in-out', // Easing function
+    });
+</script>
+
+{% endblock %}
