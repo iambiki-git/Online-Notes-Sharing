@@ -1,7 +1,66 @@
 {% load static %}
-<div class="bg-zinc-900 py-20">
-    
 
+<!-- Hero Section with Dark Theme using Tailwind CSS -->
+<div class="h-screen -mt-24 md:-mt-8 flex flex-col justify-center items-center bg-zinc-900 text-white px-6">
+    <div class="text-center space-y-6 max-w-2xl">
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold animate-fadeIn mb-4">
+            Discover & Share Knowledge
+        </h1>
+        <p class="text-lg md:text-2xl font-light animate-fadeIn delay-100">
+            Elevate your learning experience by connecting with a community passionate about sharing insights.
+        </p>
+        <a href="#" class="mt-6 inline-block bg-yellow-500 hover:bg-yellow-600 py-3 px-8 rounded-lg text-lg font-semibold animate-pulse">
+            Get Started Now
+        </a>
+    </div>
+</div>
+
+<!-- Additional Information Sections -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-12 bg-zinc-900 text-white -mt-28">
+    
+    <!-- Section 1 -->
+    <div class="p-8 bg-zinc-800 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        <h2 class="text-2xl font-bold mb-4 text-yellow-500">Upload with Ease</h2>
+        <p class="text-lg font-light">
+            Seamlessly upload your notes and resources, making them accessible to learners across the world. Join a network that values sharing.
+        </p>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="p-8 bg-zinc-800 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        <h2 class="text-2xl font-bold mb-4 text-yellow-500">Engage & Connect</h2>
+        <p class="text-lg font-light">
+            Collaborate with like-minded individuals. Explore, comment, and expand your learning journey with interactive features.
+        </p>
+    </div>
+</div>
+
+
+
+
+<style>
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fadeIn {
+        animation: fadeIn 2s ease-in-out;
+    }
+    
+    .animate-bounce {
+        animation: bounce 2s infinite;
+    }
+    
+    .delay-200 {
+        animation-delay: 0.2s;
+    }
+    
+    
+</style>
+
+{% comment %} 
+<div class="bg-zinc-900 py-20">
     <div class="container mx-auto px-4">
         <!-- Hero Section -->
         <div class="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
@@ -55,4 +114,4 @@
             <a href="#" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg mt-4 transition duration-300">Sign Up Now</a>
         </div>
     </div>
-</div>
+</div> {% endcomment %}

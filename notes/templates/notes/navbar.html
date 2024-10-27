@@ -1,4 +1,5 @@
 {% load static %}
+
 <nav class="sticky top-0 z-50 h-24 flex items-center justify-between px-6 shadow-lg bg-zinc-900">
     <a href="/">
         <h2 class="text-xl md:text-3xl font-bold text-yellow-300 font-serif">Online Notes Sharing</h2>
@@ -23,12 +24,10 @@
                 <li><a href="#" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Help/Support</a></li>
             </ul>
         </li>
-        {% comment %} <li><a href=""><i class='bx bxs-moon' ></i></a></li> {% endcomment %}
     </ul>
 
     <!-- Mobile Menu Icon -->
     <i class='bx bx-menu-alt-right text-3xl md:hidden cursor-pointer text-yellow-300' id="menuIcon"></i>
-    {% comment %} <i class='bx bxs-moon text-white text-xl md:hidden -ml-16' id="modeToggle" ></i> {% endcomment %}
 
 
     <!-- Mobile Menu -->
@@ -62,7 +61,8 @@
             </li>
         </ul>
     </div>
-</nav>
+</nav> 
+
 
 <script>
     const profileLink = document.getElementById('profileLink');

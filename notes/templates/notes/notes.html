@@ -29,12 +29,18 @@
                     Preview
                 </a>
                 
-                <!-- Download Icon with Boxicon -->
-                
-                <a href="{% url 'download_note' note.id %}" download
-                   class="text-blue-400 hover:text-blue-500 ml-2">
-                    <i class='bx bxs-download text-xl'></i>
-                </a> 
+                <!-- Download Icon  -->
+                {% if user.is_authenticated %}
+                    <a href="{% url 'download_note' note.id %}" download
+                    class="text-blue-400 hover:text-blue-500 ml-2">
+                        <i class='bx bxs-download text-xl'></i>
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}"
+                    class="text-blue-400 hover:text-blue-500 ml-2">
+                        <i class='bx bxs-download text-xl'></i>
+                    </a>
+                {% endif %}
                 
                 <!-- Upload Date -->
                 <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>
