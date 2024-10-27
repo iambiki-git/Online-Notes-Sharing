@@ -9,6 +9,16 @@
   </head>
   <body>
     {% comment %} {% block searchbar %} {% include "notes/searchbar.html" %}{% endblock %} {% endcomment %}
+    <!-- Popup Modal for Messages -->
+    <div id="messageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+      <div class="bg-zinc-800 p-6 rounded-lg shadow-lg w-3/4 md:w-1/3">
+          <p id="messageContent" class="text-white"></p>
+          <button onclick="closeMessageModal()" class="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+              OK
+          </button>
+      </div>
+  </div>
+
     {% block navbar %} {% include "notes/navbar.html" %}{% endblock %}
     {% block heroSection %} {% include "notes/heroSection.html" %}{% endblock %}
     {% block login %}{% endblock %}
@@ -25,5 +35,27 @@
     {% block footer %} {% include "notes/footer.html" %}{% endblock %}
 
 
+
+    <script>
+       // Function to open the message modal with the message content
+    function openMessageModal(message) {
+      document.getElementById("messageContent").innerText = message;
+      document.getElementById("messageModal").classList.remove("hidden");
+  }
+
+  // Function to close the message modal
+  function closeMessageModal() {
+      document.getElementById("messageModal").classList.add("hidden");
+  }
+
+  // Check if there are messages from Django and show them in the popup
+  document.addEventListener("DOMContentLoaded", function() {
+      {% if messages %}
+          {% for message in messages %}
+              openMessageModal("{{ message }}");
+          {% endfor %}
+      {% endif %}
+  });
+    </script>
   </body>
 </html>

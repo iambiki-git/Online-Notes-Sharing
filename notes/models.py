@@ -12,4 +12,28 @@ class Note(models.Model):
 
     def __str__(self):
         return self.subject
+    
+class UserInfo(models.Model):
+    author = models.OneToOneField(User, on_delete=models.CASCADE)
+    notes_count = models.IntegerField(default=0)
+    total_downloads = models.IntegerField(default=0)
+    last_uploaded_note = models.ForeignKey(Note, on_delete=models.CASCADE, null=True, blank=True)
+    recent_activity = models.TextField(default="", blank=True)
+
+    def __str__(self):
+        return self.author.username
+    
+    # def addActivity(self, activity):
+    #     self.recent_activity += f"{activity}"
+    #     self.save()
+
+
+class Bio(models.Model):
+    author = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.author.first_name}'s Bio"
 

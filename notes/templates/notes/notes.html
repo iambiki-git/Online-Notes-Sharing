@@ -26,15 +26,15 @@
                 <a href="{% if note.file %}{{ note.file.url }}{% else %}#{% endif %}" 
                    class="text-blue-400 hover:underline"
                    target="_blank">
-                   Read More
+                    Preview
                 </a>
                 
                 <!-- Download Icon with Boxicon -->
-                <a href="{% if note.file %}{{ note.file.url }}{% else %}#{% endif %}" 
-                   download 
+                
+                <a href="{% url 'download_note' note.id %}" download
                    class="text-blue-400 hover:text-blue-500 ml-2">
                     <i class='bx bxs-download text-xl'></i>
-                </a>
+                </a> 
                 
                 <!-- Upload Date -->
                 <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>

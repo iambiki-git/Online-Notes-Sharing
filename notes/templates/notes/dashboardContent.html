@@ -4,7 +4,7 @@
     
     <!-- Dashboard Overview -->
     <h2 class="text-3xl font-semibold text-indigo-400">Dashboard</h2>
-    <p class="mt-4 text-gray-300">Welcome to your profile dashboard, Bikram!</p>
+    <p class="mt-4 text-gray-300">Welcome to your profile dashboard, <span class="text-slate-400 font-bold font-mono">{{ request.user.first_name }}!</span></p>
 
     <!-- Stats Section -->
     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -14,7 +14,7 @@
                 <i class="bx bx-note text-4xl text-indigo-300"></i>
                 <div class="ml-5">
                     <h3 class="text-lg font-semibold text-indigo-200">My Notes</h3>
-                    <p class="mt-2 text-3xl font-extrabold text-indigo-400">15</p>
+                    <p class="mt-2 text-3xl font-extrabold text-indigo-400">{{ notes_count }}</p>
                 </div>
             </div>
         </a>
@@ -25,7 +25,7 @@
                 <i class="bx bx-download text-4xl text-teal-300"></i>
                 <div class="ml-5">
                     <h3 class="text-lg font-semibold text-teal-200">Total Downloads</h3>
-                    <p class="mt-2 text-3xl font-extrabold text-teal-400">35</p>
+                    <p class="mt-2 text-3xl font-extrabold text-teal-400">{{ total_downloads }}</p>
                 </div>
             </div>
         </a>
@@ -35,8 +35,8 @@
             <i class="bx bx-upload text-4xl text-yellow-300"></i>
             <div class="ml-5">
                 <h3 class="text-lg font-semibold text-yellow-200">Last Uploaded Note</h3>
-                <p class="mt-2 text-xl font-extrabold text-yellow-400">Operating Systems</p>
-                <p class="text-gray-300 text-sm">Uploaded on Oct 20, 2024</p>
+                <p class="mt-2 text-xl font-extrabold text-yellow-400">{{ last_uploaded_note }}</p>
+                <p class="text-gray-300 text-sm">Uploaded on {{ last_uploaded_note.upload_date|date:"M d, Y" }}</p>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
             <i class="bx bx-history text-4xl text-pink-300"></i>
             <div class="ml-5">
                 <h3 class="text-lg font-semibold text-pink-200">Recent Activity</h3>
-                <p class="mt-2 text-gray-300">Edited "Database Management Notes" on Oct 22, 2024.</p>
+                <p class="mt-2 text-gray-300">{{ recent_activity }}</p>
             </div>
         </div>
 
