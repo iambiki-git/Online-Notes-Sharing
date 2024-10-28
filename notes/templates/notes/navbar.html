@@ -11,20 +11,19 @@
 
     <!-- Desktop Menu -->
     <ul class="hidden md:flex md:items-center md:gap-6 md:text-slate-400 md:text-lg font-mono">
-        <li><a href="/" class="hover:text-yellow-300 transition duration-200">Home</a></li>
+        {% comment %} <li><a href="/" class="hover:text-yellow-300 transition duration-200">Home</a></li> {% endcomment %}
         <li><a href="{% url 'note' %}" class="hover:text-yellow-300 transition duration-200">Notes</a></li>
-        <li><a href="{% url 'notification' %}" class="hover:text-yellow-300 transition duration-200"><i class='bx bxs-bell-ring' ></i></a></li>
         <li class="relative">
             <a href="#" id="profileLink" class="hover:text-yellow-300 transition duration-200"><i class='bx bxs-user'></i></a>
             <!-- Profile Dropdown for Desktop -->
-            <ul id="profileDropdown" class="absolute right-0 mt-2 w-40 bg-gray-800 shadow-lg text-slate-300 font-mono rounded hidden">
+            <ul id="profileDropdown" class="absolute right-0 mt-2 w-40 bg-zinc-900 shadow-xl text-slate-300 font-mono rounded hidden">
                 {% if not user.is_authenticated %}
-                <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Login</a></li>
+                <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:text-yello-300 md:text-sm"><i class='bx bx-log-in' ></i>   Login</a></li>
                 {% else %}
-                <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Dashboard</a></li>
-                <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Logout</a></li>
+                <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:text-yellow-300 md:text-sm"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+                <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:text-yellow-300 md:text-sm"><i class='bx bx-log-out' ></i> Logout</a></li>
                 {% endif %}
-                <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:bg-gray-900 md:text-sm">Help/Support</a></li>
+                <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:text-yellow-300 md:text-sm"><i class='bx bxs-help-circle' ></i> Help/Support</a></li>
             </ul>
         </li>
     </ul>
@@ -32,38 +31,44 @@
     <!-- Mobile Menu Icon -->
     <i class='bx bx-menu-alt-right text-3xl md:hidden cursor-pointer text-yellow-300' id="menuIcon"></i>
 
-
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed top-0 right-0 w-60 h-full bg-slate-900 font-mono font-medium shadow-lg transform translate-x-full transition-transform duration-300 md:hidden z-50">
-        <button id="closeMenu" class="absolute top-4 right-4 text-2xl text-white border-b">✖</button>
-
-        <div class="flex items-center mt-12 text-slate-400 border-b p-4">
-            <img src="{% static 'notes/images/userImage.jpg' %}" alt="userPhoto" class="h-8 w-8 object-cover rounded-full">
+<div id="mobileMenu" class="fixed top-0 right-0 w-64 h-full bg-gradient-to-b from-slate-900 via-slate-800 to-slate-700 font-mono font-medium shadow-2xl transform translate-x-full transition-transform duration-500 md:hidden z-50">
+    <button id="closeMenu" class="absolute top-4 right-4 text-2xl text-yellow-300 hover:text-red-500 transform hover:scale-110 transition-all duration-300">
+        ✖
+    </button>
+    {% if user.is_authenticated %}
+    <a href="{% url 'myprofile' %}">
+        <div class="flex items-center mt-12 text-slate-300 border-b border-slate-700 p-4">
+            <img src="{% static 'notes/images/userImage.jpg' %}" alt="userPhoto" class="h-10 w-10 object-cover rounded-full border-2 border-yellow-300 shadow-lg transition-transform duration-500 hover:scale-105">
             <div class="ml-3">
-                <h3 class="font-bold text-medium">{{ request.user.first_name }}</h3>
-                <p class="text-xs">{{ request.user.email }}</p>
+                <h3 class="font-bold text-base text-purple-300 animate-fadeIn">{{ request.user.first_name }}</h3>
+                <p class="text-xs text-slate-400 font-semibold animate-fadeIn">{{ request.user.email }}</p>
             </div>
         </div>
+    </a>
+    {% endif %}
 
-        <ul class="flex flex-col items-center gap-6 -mt-1 py-4 text-slate-400 text-lg font-mono">
-            <li><a href="/" class="hover:text-yellow-300 transition duration-200">Home <i class='bx bxs-home'></i></a></li>
-            <li><a href="{% url 'note' %}" class="hover:text-yellow-300 transition duration-200">Notes <i class='bx bxs-note' ></i></a></li>
-            <li><a href="{% url 'notification' %}" class="hover:text-yellow-300 transition duration-200">Notification <i class='bx bxs-bell-ring' ></i></a></li>
-            <li class="relative">
-                <a href="#" id="mobileProfileLink" class="hover:text-yellow-300 transition duration-200">User <i class='bx bxs-user'></i></a>
-                <!-- Mobile Profile Dropdown -->
-                <ul id="mobileProfileDropdown" class="bg-slate-800 shadow-lg text-slate-500 font-mono rounded hidden mt-2 w-full">
-                    {% if not user.is_authenticated %}
-                    <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a></li>
-                    {% else %}
-                    <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a></li>
-                    <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:bg-gray-100">Help/Support</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+    <ul class="flex flex-col items-start gap-6 py-6 pl-6 text-slate-300 text-lg">
+        <li><a href="/" class="flex items-center gap-2 hover:text-yellow-400 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-home text-xl'></i> Home</a></li>
+        <li><a href="{% url 'note' %}" class="flex items-center gap-2 hover:text-yellow-400 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-note text-xl'></i> Notes</a></li>
+        
+        <li class="relative w-full">
+            <a href="#" id="mobileProfileLink" class="flex items-center gap-2 w-full hover:text-yellow-400 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-user text-xl'></i> User</a>
+            <!-- Mobile Profile Dropdown -->
+            <ul id="mobileProfileDropdown" class="bg-slate-800 shadow-lg text-slate-400 font-mono rounded-lg hidden mt-2 w-11/12 mx-auto transform transition-all duration-500 origin-top animate-fadeInDown">
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-slate-600 rounded-t-lg transition-all duration-300 transform hover:scale-105"><i class='bx bx-log-in' ></i> Login</a></li>
+                {% else %}
+                <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-slate-600 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+                <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-slate-600 transition-all duration-300 transform hover:scale-105"><i class='bx bx-log-out' ></i> Logout</a></li>
+                {% endif %}
+                <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:bg-slate-600 rounded-b-lg transition-all duration-300 transform hover:scale-105"><i class='bx bxs-help-circle' ></i> Help/Support</a></li>
+            </ul>
+        </li>
+    </ul>
+    
+</div>
+
 </nav> 
 
 <style>

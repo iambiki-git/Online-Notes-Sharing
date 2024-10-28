@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .models import Note, Bio, UserInfo
+from .models import Note, Bio, UserInfo, Feedback
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -22,7 +22,6 @@ def signin(request):
 
             if user is not None:
                 login(request, user)
-                messages.success(request, "You are now logged in.")
                 return redirect('index')
             else:
                 messages.error(request, 'Invalid email or password')
@@ -70,16 +69,23 @@ def signout(request):
     messages.success(request, 'Logout successful. See you next time.')
     return redirect('login')
 
+@login_required
 def dashboard(request):
+    
     #fetch the user's info
     user_info = UserInfo.objects.get(author=request.user)
 
     #get the latest activity
     latest_activity = user_info.recent_activity if user_info.recent_activity else "No recent activity."
 
-    #get the notes uploaded by the user
-    user_notes = Note.objects.filter(author=request.user)
-    user_notes_count = user_notes.count()
+    if request.user.is_superuser:
+        user_notes = Note.objects.all()
+        user_notes_count = user_notes.count()
+    else:
+        #get the notes uploaded by the user
+        user_notes = Note.objects.filter(author=request.user)
+        user_notes_count = user_notes.count()
+    
 
     #fetch the last uploaded note
     last_uploaded_note = user_info.last_uploaded_note
@@ -111,10 +117,6 @@ def notes(request):
         'notes':notes,
     }
     return render(request, 'notes/notes.html', content)
-
-
-def notification(request):
-    return render(request, 'notes/notification.html')
 
 @login_required
 def myprofile(request):
@@ -280,3 +282,18 @@ def note_preview(request, note_id):
     
 def help_support(request):
     return render(request, 'notes/helpSupport.html')
+
+def feedback(request):
+    if request.method == "POST":
+        feedback = request.POST.get('feedback')
+        suggestion = Feedback.objects.create(
+            author = request.user,
+            feedback = feedback,
+        )
+
+        messages.success(request, 'Feedback sent successfully.')
+
+        return redirect('help_support')
+    
+def aboutus(request):
+    return render(request, 'notes/aboutus.html')

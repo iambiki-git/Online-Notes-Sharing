@@ -42,37 +42,36 @@
                     </div>
                 </div>
 
-                <!-- Contact Support Section -->
-                <div id="contact" class="bg-zinc-800 p-6 rounded-lg shadow-md mb-6" data-aos="fade-up">
-                    <h2 class="text-3xl font-semibold mb-4">Contact Support</h2>
-                    <form action="" method="post" class="space-y-4">
-                        {% csrf_token %}
-                        <div>
-                            <label for="name" class="block text-gray-300">Your Name</label>
-                            <input type="text" name="name" id="name" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-gray-300">Your Email</label>
-                            <input type="email" name="email" id="email" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-gray-300">Message</label>
-                            <textarea name="message" id="message" rows="4" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200"></textarea>
-                        </div>
-                        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">Send Message</button>
-                    </form>
+                <!-- User Guide Section -->
+                <div id="userGuide" class="bg-zinc-800 p-6 rounded-lg shadow-md mb-6" data-aos="fade-up">
+                    <h2 class="text-3xl font-semibold mb-4">User Guide</h2>
+                    <p class="text-gray-300 mb-4">Welcome! This guide will help you get started with using the site and understanding key features:</p>
+                    <ul class="space-y-4 list-decimal list-inside">
+                        <li data-aos="fade-up" data-aos-delay="100">
+                            <strong>Uploading Notes:</strong> Go to the 'My Notes' section, click 'Upload,' and follow the prompts.
+                        </li>
+                        <li data-aos="fade-up" data-aos-delay="200">
+                            <strong>Managing Notes:</strong> View your uploaded notes in the 'My Notes' section, where you can edit or delete them as needed.
+                        </li>
+                        <li data-aos="fade-up" data-aos-delay="300">
+                            <strong>Searching for Notes:</strong> Use the search bar at the top to find specific notes by keyword or topic.
+                        </li>
+                        <li data-aos="fade-up" data-aos-delay="400">
+                            <strong>Sharing Notes:</strong> After uploading, click the 'Share' button to generate a link for others to access your notes.
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Feedback Section -->
                 <div id="feedback" class="bg-zinc-800 p-6 rounded-lg shadow-md" data-aos="fade-up">
                     <h2 class="text-3xl font-semibold mb-4">Feedback and Suggestions</h2>
-                    <form action="" method="post" class="space-y-4">
+                    <form action="{% url 'feedback' %}" method="post" class="space-y-4">
                         {% csrf_token %}
                         <div>
                             <label for="feedback" class="block text-gray-300">Your Feedback</label>
                             <textarea name="feedback" id="feedback" rows="4" required class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200"></textarea>
                         </div>
-                        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">Submit Feedback</button>
+                        <button type="submit" class="w-full px-4 py-2 text-white font-semibold bg-zinc-900 rounded-lg hover:bg-slate-300 hover:text-black transition-colors duration-300">Submit Feedback</button>
                     </form>
                 </div>
             </div>

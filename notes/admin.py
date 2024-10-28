@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Note, Bio, UserInfo
+from .models import Note, Bio, UserInfo, Feedback
 
 # Register your models here.
 @admin.register(Note)
@@ -17,3 +17,8 @@ class BioAdmin(admin.ModelAdmin):
 @admin.register(UserInfo)
 class UserInfoAdmin(admin.ModelAdmin):
     list_display = ('author', 'notes_count', 'total_downloads', 'last_uploaded_note', 'recent_activity')
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('author', 'feedback')

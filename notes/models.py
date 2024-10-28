@@ -32,4 +32,11 @@ class Bio(models.Model):
 
     def __str__(self):
         return f"{self.author.first_name}'s Bio"
+    
+
+class Feedback(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    feedback = models.TextField()
+
+    
 

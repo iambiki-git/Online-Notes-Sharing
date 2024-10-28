@@ -1,0 +1,89 @@
+{% extends "notes/base.html" %}
+{% load static %}
+{% block heroSection %}{% endblock %}
+{% block dashboard %}{% endblock %}
+{% block aboutus %}
+<div class="bg-zinc-900 py-10 text-zinc-200">
+    <!-- Header Section -->
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold text-zinc-100 mb-4">About Us</h1>
+        <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
+            Learn more about our mission, vision, and the team behind our notes-sharing platform.
+        </p>
+    </div>
+
+    <!-- Mission and Vision Section -->
+    <div class="container mx-auto px-4 py-10 flex flex-col md:flex-row gap-6">
+        <!-- Mission Card -->
+        <div class="flex-1 bg-zinc-800 rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="text-3xl font-semibold text-zinc-100 mb-4">Our Mission</h2>
+            <p class="text-zinc-400">
+                We aim to make knowledge-sharing seamless, accessible, and collaborative, empowering students and professionals alike.
+            </p>
+        </div>
+        <!-- Vision Card -->
+        <div class="flex-1 bg-zinc-800 rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="text-3xl font-semibold text-zinc-100 mb-4">Our Vision</h2>
+            <p class="text-zinc-400">
+                To create a world where learning is boundless and everyone has access to quality educational resources.
+            </p>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="container mx-auto px-4 py-10">
+        <h2 class="text-4xl font-bold text-zinc-100 text-center mb-8">Meet Our Team</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Team Member Card -->
+            <div class="bg-zinc-800 rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                <img src="{% static 'notes/images/userImage.jpg' %}" alt="Team Member" class="w-32 h-32 mx-auto rounded-full mb-4 object-cover">
+                <h3 class="text-xl font-semibold text-zinc-100">John Doe</h3>
+                <p class="text-zinc-500">Founder & CEO</p>
+                <p class="text-zinc-400 mt-2">John is passionate about education and technology, leading our mission to empower students worldwide.</p>
+            </div>
+            <div class="bg-zinc-800 rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                <img src="{% static 'notes/images/userImage.jpg' %}" alt="Team Member" class="w-32 h-32 mx-auto rounded-full mb-4 object-cover">
+                <h3 class="text-xl font-semibold text-zinc-100">Jane Smith</h3>
+                <p class="text-zinc-500">CTO</p>
+                <p class="text-zinc-400 mt-2">Jane brings her expertise in software development to create a robust and user-friendly platform.</p>
+            </div>
+            <div class="bg-zinc-800 rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                <img src="{% static 'notes/images/userImage.jpg' %}" alt="Team Member" class="w-32 h-32 mx-auto rounded-full mb-4 object-cover">
+                <h3 class="text-xl font-semibold text-zinc-100">Alex Brown</h3>
+                <p class="text-zinc-500">Community Manager</p>
+                <p class="text-zinc-400 mt-2">Alex fosters our vibrant community, ensuring our users are engaged and supported.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Values Section -->
+    <div class="container mx-auto px-4 py-10">
+        <h2 class="text-4xl font-bold text-zinc-100 text-center mb-8">Our Core Values</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-zinc-700 text-zinc-100 rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-2xl font-semibold mb-2">Integrity</h3>
+                <p class="text-zinc-300">We believe in honesty and transparency in everything we do.</p>
+            </div>
+            <div class="bg-zinc-700 text-zinc-100 rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-2xl font-semibold mb-2">Innovation</h3>
+                <p class="text-zinc-300">We are constantly improving to meet the needs of our users.</p>
+            </div>
+            <div class="bg-zinc-700 text-zinc-100 rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-2xl font-semibold mb-2">Collaboration</h3>
+                <p class="text-zinc-300">Together, we can achieve more and support each other's growth.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add AOS (Animate On Scroll) Library for Animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800, // Animation duration
+        easing: 'ease-in-out', // Easing function
+    });
+</script>
+
+{% endblock %}
