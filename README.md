@@ -23,8 +23,8 @@ The Notes Sharing Website is designed for students, professionals, and educators
 - **Database**: SQLite (default Django DB)
 - **Additional Libraries**: AOS (for animations)
 
+```
 ## Project Structure
-
 
 notes-sharing-website/
 │
@@ -42,5 +42,5 @@ notes-sharing-website/
 ├── manage.py                    # Django management file
 ├── requirements.txt             # Python dependencies
 └── README.md                    # Project readme file
-
+```
 
