@@ -62,9 +62,13 @@
                 <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 hover:bg-slate-600 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
                 <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-slate-600 transition-all duration-300 transform hover:scale-105"><i class='bx bx-log-out' ></i> Logout</a></li>
                 {% endif %}
-                <li><a href="{% url 'help_support' %}" class="block px-4 py-2 hover:bg-slate-600 rounded-b-lg transition-all duration-300 transform hover:scale-105"><i class='bx bxs-help-circle' ></i> Help/Support</a></li>
             </ul>
         </li>
+        <li><a href="{% url 'aboutus' %}" class="flex items-center gap-2 hover:text-yellow-400 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-info-circle text-xl'></i> Aboutus</a></li>
+        <li><a href="{% url 'testimonial' %}" class="flex items-center gap-2 hover:text-yellow-400 transition-all duration-300 transform hover:scale-105"><i class="bx bx-comment text-xl"></i> Testimonials</a></li>
+        <li><a href="{% url 'help_support' %}" class="flex items-center gap-2 hover:text-yellow-400 transition-all duration-300 transform hover:scale-105"><i class='bx bxs-help-circle' ></i> Help/Support</a></li>
+
+
     </ul>
     
 </div>

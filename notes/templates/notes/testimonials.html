@@ -1,0 +1,26 @@
+{% extends "notes/base.html" %}
+{% load static %}
+{% block heroSection %}{% endblock %}
+{% block dashboard %}{% endblock %}
+{% block testimonials %}
+<div class="bg-zinc-900 py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center text-blue-500 mb-10">What Our Users Say</h2>
+
+        {% if testimonials %}
+        <!-- Responsive grid layout for testimonials -->
+        <div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {% for testimonial in testimonials %}
+            <div class="bg-zinc-800 rounded-lg p-6 shadow-lg">
+                <!-- Testimonial content here -->
+                <p class="text-lg text-slate-300 mb-4">"{{ testimonial.feedback }}"</p>
+                <p class="text-blue-400 font-semibold">{{ testimonial.author.first_name }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

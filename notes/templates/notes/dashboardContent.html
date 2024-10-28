@@ -51,7 +51,7 @@
             <i class="bx bx-history text-4xl text-pink-300"></i>
             <div class="ml-5">
                 <h3 class="text-lg font-semibold text-pink-200">Recent Activity</h3>
-                <p class="mt-2 text-gray-300">{{ recent_activity }}</p>
+                <p class="mt-2 text-gray-300 font-bold">{{ recent_activity }}</p>
             </div>
         </div>
 
@@ -60,8 +60,8 @@
             <i class="bx bx-star text-4xl text-red-300"></i>
             <div class="ml-5">
                 <h3 class="text-lg font-semibold text-red-200">Most Downloaded Note</h3>
-                <p class="mt-2 text-3xl font-extrabold text-red-400">Database Management</p>
-                <p class="text-gray-300">20 Downloads</p>
+                <p class="mt-2 text-3xl font-extrabold text-red-400">{{ most_downloaded_note_title }}</p>
+                <p class="text-gray-300 font-bold">{% if most_downloaded_note_downloads_count %} Downloads: {{ most_downloaded_note_downloads_count }} {% endif %}</p>
             </div>
         </div>
     </div>
@@ -75,14 +75,6 @@
             </div>
         </a>
 
-        <!-- Settings -->
-        <a href="#" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
-            <i class="bx bx-cog text-4xl text-green-300"></i>
-            <div class="ml-5">
-                <h3 class="text-lg font-semibold text-green-200">Settings</h3>
-            </div>
-        </a>
-
         <!-- Help/Support -->
         <a href="?section=helpSupport" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
             <i class="bx bx-help-circle text-4xl text-purple-300"></i>
@@ -90,6 +82,15 @@
                 <h3 class="text-lg font-semibold text-purple-200">Help/Support</h3>
             </div>
         </a>
+
+        <!-- Logout -->
+        <a href="{% url 'logout' %}" class="bg-gray-700 p-5 rounded-lg shadow-md flex items-center hover:bg-gray-600 transition cursor-pointer">
+            <i class="bx bx-log-out text-4xl text-purple-300"></i>
+            <div class="ml-5">
+                <h3 class="text-lg font-semibold text-purple-200">Logout</h3>
+            </div>
+        </a>
+
     </div>
    
 </div>

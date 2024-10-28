@@ -19,5 +19,6 @@ urlpatterns = [
     path('help_support/', views.help_support, name='help_support'),
     path('help_support/feedback/', views.feedback, name='feedback'),
     path('aboutus/', views.aboutus, name='aboutus'),
+    path('testimonial/', views.testimonial, name='testimonial'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

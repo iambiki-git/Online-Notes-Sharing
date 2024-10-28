@@ -4,7 +4,7 @@ from .models import Note, Bio, UserInfo, Feedback
 # Register your models here.
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('author', 'faculty', 'subject', 'upload_date')
+    list_display = ('author', 'faculty', 'subject', 'upload_date', 'downloads')
     search_fields = ('subject', 'faculty', 'author')
     list_filter = ('upload_date', )
     

@@ -13,7 +13,7 @@
         <p class="text-lg md:text-2xl font-light mb-6 text-slate-400">
             Join a vibrant community of learners and educators, sharing notes and resources to enhance learning.
         </p>
-        <a href="#features" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-3 px-8 rounded-lg text-lg font-semibold transition duration-200">
+        <a href="{% url 'mynotes' %}" class="inline-block bg-yellow-500 hover:bg-yellow-600 py-3 px-8 rounded-lg text-lg font-semibold transition duration-200">
             Start Sharing
         </a>
     </div>
@@ -58,6 +58,7 @@
     </div>
 </div>
 
+{% if not user.is_authenticated %}
 <!-- Community Section -->
 <div class="relative bg-zinc-900 py-16 overflow-hidden">
     <div class="container mx-auto text-center px-4 relative z-10">
@@ -65,11 +66,12 @@
         <p class="text-lg text-slate-500 mb-6" data-aos="fade-up" data-aos-delay="100">
             Connect with like-minded individuals who share your passion for learning and sharing knowledge. Participate in forums and discussions to enrich your understanding.
         </p>
-        <a href="#" class="inline-block bg-pink-200 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+        <a href="{% url 'register' %}" class="inline-block bg-pink-200 hover:bg-pink-300 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
             Become a Member
         </a>
     </div>
 </div>
+{% endif %}
 
 <!-- Resources Section -->
 <div class="relative bg-zinc-900 py-16 overflow-hidden">
@@ -78,27 +80,29 @@
         <p class="text-lg text-slate-500 mb-6" data-aos="fade-up" data-aos-delay="100">
             Dive into a wealth of educational materials contributed by our community members, from notes to study guides and more.
         </p>
-        <a href="#" class="inline-block bg-green-200 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+        <a href="{% url 'note' %}" class="inline-block bg-green-200 hover:bg-green-300 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
             View Resources
         </a>
     </div>
 </div>
 
 <!-- Testimonials Section -->
+{% if testimonials %}
 <div class="relative bg-zinc-900 py-16 overflow-hidden">
     <div class="container mx-auto text-center px-4 relative z-10">
         <h2 class="text-4xl font-bold text-blue-500 mb-4" data-aos="zoom-in">What Our Users Say</h2>
+        {% for testimonial in testimonials|slice:":1" %}
         <p class="text-lg text-slate-300 mb-6" data-aos="fade-up" data-aos-delay="100">
-            "This platform has transformed the way I share and learn from notes. A game-changer for students!" - <strong>User Testimonial</strong>
+           "{{ testimonial.feedback }}" - <strong>{{ testimonial.author.first_name }}</strong>
         </p>
-        <p class="text-lg text-slate-300 mb-6" data-aos="fade-up" data-aos-delay="200">
-            "The community is amazing, and the resources available have been incredibly helpful." - <strong>Another User</strong>
-        </p>
-        <a href="#" class="inline-block bg-blue-200 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+        {% endfor %}
+        <a href="{% url 'testimonial' %}" class="inline-block bg-blue-200 hover:bg-blue-300 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
             Read More Testimonials
-        </a>
+        </a>    
     </div> 
 </div>
+{% endif %}
+
 
 <!-- About Section -->
 <div class="relative bg-zinc-900 py-16 overflow-hidden">
@@ -107,7 +111,7 @@
         <p class="text-lg text-slate-300 mb-6" data-aos="fade-up" data-aos-delay="100">
             Our mission is to create an accessible platform for students and educators to share and enhance knowledge through collaborative learning.
         </p>
-        <a href="{% url 'aboutus' %}" class="inline-block bg-violet-200 hover:bg-yellow-600 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
+        <a href="{% url 'aboutus' %}" class="inline-block bg-violet-200 hover:bg-violet-300 py-2 px-4 rounded-lg text-lg font-semibold transition duration-200">
             Learn More
         </a>
     </div>

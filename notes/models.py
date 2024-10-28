@@ -9,6 +9,7 @@ class Note(models.Model):
     title = models.CharField(max_length=100, default="Title")
     upload_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='all_notes/', blank=True, null=True)
+    downloads = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.subject

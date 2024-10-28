@@ -9,7 +9,11 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):
-    return render(request, 'notes/index.html')
+    testimonials = Feedback.objects.all()
+    context = {
+        'testimonials':testimonials,
+    } 
+    return render(request, 'notes/index.html', context)
 
 def signin(request):
     if request.method == "POST":
@@ -31,6 +35,9 @@ def signin(request):
     return render(request, 'notes/login.html')
 
 def registration(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    
     if request.method == 'POST':
         fullname = request.POST.get('full_name')
         email = request.POST.get('email')
@@ -59,7 +66,11 @@ def registration(request):
         )
         user.first_name = fullname  #store the full nane in first_name field
         user.save()
-        messages.success(request, 'Registration successful. You can now login.')
+
+        #create user_info instance for the new user
+        UserInfo.objects.create(author=user)
+
+        messages.success(request, 'Welcome to the community! Dive in and start exploring all the resources waiting for you.')
         return redirect('login')     
 
     return render(request, 'notes/registration.html')
@@ -74,6 +85,13 @@ def dashboard(request):
     
     #fetch the user's info
     user_info = UserInfo.objects.get(author=request.user)
+    most_downloaded_note = Note.objects.order_by('-downloads').first()
+    if most_downloaded_note:
+        title = most_downloaded_note.title
+        downloads_count = most_downloaded_note.downloads
+    else:
+        title = None
+        downloads_count = 0 
 
     #get the latest activity
     latest_activity = user_info.recent_activity if user_info.recent_activity else "No recent activity."
@@ -98,6 +116,8 @@ def dashboard(request):
         'last_uploaded_note':user_info.last_uploaded_note,
         'recent_activity':latest_activity,
         'user_notes':user_notes,  #pass the user's notes for any additional usage
+        'most_downloaded_note_title':title,
+        'most_downloaded_note_downloads_count':downloads_count,
     }
 
     return render(request, 'notes/dashboard.html', context)
@@ -252,19 +272,22 @@ def delete_note(request, note_id):
 from django.utils import timezone
 def download_note(request, note_id):
     note = get_object_or_404(Note, id=note_id)
+   
 
      # Check if the note has a file before attempting to download
     if note.file:
         # Update UserInfo for download
         user_info, created = UserInfo.objects.get_or_create(author=request.user)
         user_info.total_downloads += 1  # Increment download count
-        user_info.recent_activity = f'Downloaded note: "{note.title}" on {timezone.now().strftime('%Y-%m-%d')}'        
+        user_info.recent_activity = f'Downloaded note: "{note.title}" on {timezone.now().strftime("%Y-%m-%d")}' 
         user_info.save()  # Save changes
+
+        note.downloads += 1
+        note.save()
 
         response = HttpResponse(note.file, content_type='application/pdf')  # Adjust content type if needed
         response['Content-Disposition'] = f'attachment; filename="{note.file.name}"'
         return response
-     
     else:
         return HttpResponse("File not found.", status=404)  # Handle the case where the file does not exist
 
@@ -297,3 +320,10 @@ def feedback(request):
     
 def aboutus(request):
     return render(request, 'notes/aboutus.html')
+
+def testimonial(request):
+    testimonials = Feedback.objects.all()
+    context = {
+        'testimonials':testimonials,
+    }
+    return render(request, 'notes/testimonials.html', context)
