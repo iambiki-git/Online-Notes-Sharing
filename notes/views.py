@@ -16,9 +16,12 @@ def index(request):
     return render(request, 'notes/index.html', context)
 
 def signin(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
+        remember_me = request.POST.get('remember_me')
 
         try:
             user = User.objects.get(email=email)
@@ -26,6 +29,13 @@ def signin(request):
 
             if user is not None:
                 login(request, user)
+
+                #set the session to expire when the browser is closed if not "Remember Me"
+                if remember_me:
+                    request.session.set_expiry(86400) #set the session expiry to 2 weeks
+                else:
+                    request.session.set_expiry(0) #session expires when the browser is closed
+
                 return redirect('index')
             else:
                 messages.error(request, 'Invalid email or password')
@@ -86,7 +96,7 @@ def dashboard(request):
     #fetch the user's info
     user_info = UserInfo.objects.get(author=request.user)
     most_downloaded_note = Note.objects.order_by('-downloads').first()
-    if most_downloaded_note:
+    if most_downloaded_note and most_downloaded_note.downloads > 0:
         title = most_downloaded_note.title
         downloads_count = most_downloaded_note.downloads
     else:
@@ -94,7 +104,7 @@ def dashboard(request):
         downloads_count = 0 
 
     #get the latest activity
-    latest_activity = user_info.recent_activity if user_info.recent_activity else "No recent activity."
+    latest_activity = user_info.recent_activity if user_info.recent_activity else "None"
 
     if request.user.is_superuser:
         user_notes = Note.objects.all()
@@ -122,12 +132,9 @@ def dashboard(request):
 
     return render(request, 'notes/dashboard.html', context)
 
-# def dashboard(request):
-#     return render(request, 'notes/dashboard.html', )
-
-
 def notes(request):
     notes = Note.objects.all().order_by('-upload_date')
+    faculties = Note.objects.values_list('faculty', flat=True).distinct()  #get unique faculty names
 
     paginator = Paginator(notes, 16)  # Show 10 notes per page
     page_number = request.GET.get('page')
@@ -135,6 +142,7 @@ def notes(request):
 
     content = {
         'notes':notes,
+        'faculties':faculties,
     }
     return render(request, 'notes/notes.html', content)
 
@@ -258,12 +266,26 @@ def mynotes(request):
 
 
 def delete_note(request, note_id):
-    note = Note.objects.get(author=request.user, id=note_id)
-    user_info = UserInfo.objects.get(author=request.user)
+    note = get_object_or_404(Note, author=request.user, id=note_id)
+    user_info = get_object_or_404(UserInfo, author=request.user)
 
+    #update the user info to remove the reference to the note being deleted
+    if user_info.last_uploaded_note == note:
+        user_info.last_uploaded_note = None
+        user_info.save()
+
+    #get the file path to delete
+    file_path = note.file.path if note.file else None   
+
+    #delete the note
     note.delete()
+    user_info.notes_count -= 1
     user_info.recent_activity = f"Deleted note: '{note.title}' on {timezone.now().strftime('%Y-%m-%d')}"
     user_info.save()
+
+    import os
+    if file_path and os.path.isfile(file_path):
+        os.remove(file_path)
 
     messages.success(request, 'Note deleted successfully.')
     return redirect('mynotes')
@@ -327,3 +349,6 @@ def testimonial(request):
         'testimonials':testimonials,
     }
     return render(request, 'notes/testimonials.html', context)
+
+
+

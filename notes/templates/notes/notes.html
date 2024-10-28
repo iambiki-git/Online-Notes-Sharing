@@ -4,23 +4,45 @@
 {% block dashboard %}{% endblock %}
 {% block notes %}
 <div class="bg-zinc-900 text-white min-h-screen p-6 md:p-12">
+
+    <!-- Sliding Faculty Filter Bar -->
+    <div class="overflow-x-auto mb-6 py-4 bg-zinc-800 rounded-lg">
+        <div class="flex space-x-4 px-4">
+            <!-- Faculty Filter Buttons -->
+            <button onclick="filterByFaculty('All')" class="faculty-filter-btn bg-blue-600 px-3 py-1 rounded-full text-sm font-semibold text-white hover:bg-blue-700">All</button>
+            {% for faculty in faculties %}
+                <button onclick="filterByFaculty('{{ faculty }}')" class="faculty-filter-btn bg-gray-700 px-3 py-1 rounded-full text-sm font-semibold text-slate-200 hover:bg-gray-600">
+                    {{ faculty }}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
     
     <!-- Search Bar Section -->
     <div class="mb-8 flex justify-center">
         <div class="w-full md:w-1/2">
             <input type="text" id="searchInput" placeholder="Search notes..." 
                    class="w-full px-4 py-2 text-slate-300 bg-zinc-800 rounded-lg focus:outline-none focus:ring focus:ring-blue-500" 
-                   oninput="searchNotes()">
+                   oninput="filterNotes()">
         </div>
     </div>
+
+     <!-- Message Section -->
+     <p id="resultMessage" class="text-center text-slate-400 mb-4"></p>
 
     <!-- Notes Section -->
     <div id="notesContainer" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for note in notes %}
-        <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out">
-            <h2 class="text-lg font-semibold text-slate-300 mb-2">{{ note.faculty }}</h2>
+        <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-slate-300 mb-2">{{ note.faculty }}</h2>
+                {% if note.author == user %}
+                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                {% endif %}
+            </div>
+
             <p class="text-slate-400 text-sm mb-4">Subject: {{ note.subject }}</p>
-            <p class="text-slate-400 text-sm mb-4">Title: {{ note.title|truncatewords:20 }}</p>
+            <p class="text-slate-400 text-sm mb-4">Title: {{ note.title|truncatewords:20 }}</p>            
             <div class="flex justify-between items-center">
                 {% if user.is_authenticated %}
                 <!-- Preview Link -->
@@ -52,9 +74,7 @@
         <p class="text-slate-400 col-span-full text-center mt-6">No notes found.</p>
         {% endfor %}
     </div>
-     {% comment %} <!-- No Results Found Message -->
-     <p id="noResultsMessage" class="text-slate-400 col-span-full text-center mt-6" style="display:none;">No results found.</p> {% endcomment %}
-
+   
      <!-- Pagination Controls -->
     <div class="flex justify-center mt-8">
         <div class="flex items-center space-x-2">
@@ -78,26 +98,51 @@
 </div>
 
 <script>
-    // Search Notes Functionality
-    function searchNotes() {
+    
+    let selectedFaculty = 'All'; // Initially set to 'All' to show all notes
+
+    // Function to handle faculty selection
+    function filterByFaculty(faculty) {
+        selectedFaculty = faculty;
+        filterNotes(); // Call filterNotes to apply the faculty filter
+    }
+
+    // Function to handle both search and faculty filters
+    function filterNotes() {
         const searchQuery = document.getElementById('searchInput').value.toLowerCase();
         const notes = document.querySelectorAll('#notesContainer > div');
-       // let hasResults = false;
-        
+        const resultMessage = document.getElementById('resultMessage');
+        let visibleCount = 0; // Counter for visible notes
+
         notes.forEach(note => {
-            const subject = note.querySelector('p').textContent.toLowerCase();
-            const title = note.querySelector('p').textContent.toLowerCase();
+            const faculty = note.getAttribute('data-faculty');
+            const subject = note.querySelector('p:nth-of-type(1)').textContent.toLowerCase();
+            const title = note.querySelector('p:nth-of-type(2)').textContent.toLowerCase();
 
-            if (subject.includes(searchQuery) || title.includes(searchQuery)) {
+            // Check if the note matches the selected faculty and search query
+            const matchesFaculty = (selectedFaculty === 'All' || faculty === selectedFaculty);
+            const matchesSearch = (subject.includes(searchQuery) || title.includes(searchQuery));
+
+            // Display the note only if it matches both the faculty and search query
+            if (matchesFaculty && matchesSearch) {
                 note.style.display = "block";
-                //let hasResults = true;
-
+                visibleCount++; // Increase count for each visible note
             } else {
                 note.style.display = "none";
+                resultMessage.innerText = "No note found."
             }
         });
-        // Show "No results found" message if no notes match the search query
-       // document.getElementById('noResultsMessage').style.display = hasResults ? "none" : "block";
+        // Update the result message based on the number of visible notes
+        if (visibleCount === 0) {
+            resultMessage.innerText = "No notes found.";
+        } else {
+            resultMessage.innerText = `${visibleCount} note${visibleCount > 1 ? 's' : ''} found.`;
+        }
     }
+
+    // Event listener for real-time search filtering
+    document.getElementById('searchInput').addEventListener('input', filterNotes);
+
+
 </script>
 {% endblock %}
