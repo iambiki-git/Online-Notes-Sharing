@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .models import Note, Bio, UserInfo, Feedback
+from .models import Note, Bio, UserInfo, Feedback, NoteDownload
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -132,19 +132,98 @@ def dashboard(request):
 
     return render(request, 'notes/dashboard.html', context)
 
+# from datetime import timedelta
+# def notes(request):
+#     notes = Note.objects.all().order_by('-upload_date')
+#     faculties = Note.objects.values_list('faculty', flat=True).distinct()  #get unique faculty names
+
+#     # Initialize recommended_notes
+#     recommended_notes = Note.objects.none()  # Use an empty QuerySet as the default
+
+#     # Determine the cutoff date (30 days ago)
+#     some_cutoff_date = timezone.now() - timedelta(days=30)
+
+
+#     #if user is new (no downloads yet), show all notes
+#     if NoteDownload.objects.filter(user=request.user).exists():
+#         recommended_notes = recommended_notes(request.user)
+#     else:
+#         recommended_notes = Note.objects.all().order_by('-upload_date')
+
+
+#     paginator = Paginator(notes, 16)  # Show 10 notes per page
+#     page_number = request.GET.get('page')
+#     notes = paginator.get_page(page_number)
+
+#     content = {
+#         'notes':notes,
+#         'faculties':faculties,
+#         'recommended_notes':recommended_notes,
+#         'some_cutoff_date': some_cutoff_date,
+#     }
+#     return render(request, 'notes/notes.html', content)
+
+
+# from django.db.models import Count
+# def notes_recommended(user):
+#     # Get the notes downloaded by the user
+#     user_downloads = NoteDownload.objects.filter(user=user).values_list('note', flat=True)
+    
+#     # Find the most downloaded notes by other users
+#     recommended_notes = NoteDownload.objects.exclude(user=user).values('note').annotate(download_count=Count('note')).order_by('-download_count')[:5]  # Adjust the number as needed
+
+#     # Get the corresponding Note objects
+#     return Note.objects.filter(id__in=[note['note'] for note in recommended_notes])
+
+from datetime import timedelta
+from django.utils import timezone
+from django.core.paginator import Paginator
+from .models import Note, NoteDownload  # Ensure you import your models
+from django.db.models import Count
+from .recommendation import recommend_notes
+
+
 def notes(request):
     notes = Note.objects.all().order_by('-upload_date')
-    faculties = Note.objects.values_list('faculty', flat=True).distinct()  #get unique faculty names
+    faculties = Note.objects.values_list('faculty', flat=True).distinct()  # Get unique faculty names
 
-    paginator = Paginator(notes, 16)  # Show 10 notes per page
+    # Initialize recommended_notes
+    recommended_notes_queryset = Note.objects.none()  # Use an empty QuerySet as the default
+
+    # Determine the cutoff date (30 days ago)
+    some_cutoff_date = timezone.now() - timedelta(days=1)
+    print(some_cutoff_date)
+
+    # Check if the user has downloaded notes
+    if request.user.is_authenticated and NoteDownload.objects.filter(user=request.user).exists():
+        if request.user.date_joined < some_cutoff_date:  # User is older than 1 day
+            recommended_notes_queryset = recommend_notes(request.user)  # Call your recommendation function
+            # print(recommended_notes_queryset)
+        else:
+            recommended_notes_queryset = Note.objects.all().order_by('-upload_date')  # Show all notes for new users
+
+    paginator = Paginator(notes, 16)  # Show 16 notes per page
     page_number = request.GET.get('page')
     notes = paginator.get_page(page_number)
 
     content = {
-        'notes':notes,
-        'faculties':faculties,
+        'notes': notes,
+        'faculties': faculties,
+        'recommended_notes': recommended_notes_queryset,  # Pass the recommended notes QuerySet to the template
+        'some_cutoff_date': some_cutoff_date,
     }
     return render(request, 'notes/notes.html', content)
+
+# def notes_recommended(user):
+#     # Get the notes downloaded by the user
+#     user_downloads = NoteDownload.objects.filter(user=user).values_list('note', flat=True)
+
+#     # Find the most downloaded notes by other users
+#     recommended_notes = NoteDownload.objects.exclude(user=user).values('note').annotate(download_count=Count('note')).order_by('-download_count')[:5]  # Adjust the number as needed
+
+#     # Get the corresponding Note objects
+#     return Note.objects.filter(id__in=[note['note'] for note in recommended_notes])
+
 
 @login_required
 def myprofile(request):
@@ -295,14 +374,17 @@ from django.utils import timezone
 def download_note(request, note_id):
     note = get_object_or_404(Note, id=note_id)
    
-
      # Check if the note has a file before attempting to download
     if note.file:
         # Update UserInfo for download
         user_info, created = UserInfo.objects.get_or_create(author=request.user)
+
         user_info.total_downloads += 1  # Increment download count
         user_info.recent_activity = f'Downloaded note: "{note.title}" on {timezone.now().strftime("%Y-%m-%d")}' 
         user_info.save()  # Save changes
+
+
+        NoteDownload.objects.create(user=request.user, note=note)
 
         note.downloads += 1
         note.save()
@@ -312,6 +394,9 @@ def download_note(request, note_id):
         return response
     else:
         return HttpResponse("File not found.", status=404)  # Handle the case where the file does not exist
+
+
+
 
 from django.http import FileResponse
 def note_preview(request, note_id):
@@ -351,4 +436,9 @@ def testimonial(request):
     return render(request, 'notes/testimonials.html', context)
 
 
-
+def user_downloads(request):
+    user_downloads = NoteDownload.objects.filter(user=request.user).order_by('-downloaded_at')
+    context = {
+        'downloads':user_downloads,
+    }
+    return render(request, 'notes/userDownloads.html', context)

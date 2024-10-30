@@ -1,0 +1,64 @@
+{% extends "notes/base.html" %}
+{% load static %}
+{% block heroSection %}{% endblock %}
+{% block dashboard %}{% endblock %}
+{% block userdownloads %}
+    <!-- User Downloads Page -->
+    <div class="min-h-screen bg-zinc-900 text-white py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+        
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold mb-8 text-center">Download History</h1>
+        
+        <!-- Downloads Table -->
+        <div class="w-full max-w-6xl overflow-hidden rounded-lg shadow-lg bg-zinc-900 hidden sm:block">
+            <table class="min-w-full text-left text-sm">
+                <thead class="bg-zinc-800">
+                    <tr>
+                        <th class="py-3 px-6 font-semibold text-slate-300">Title</th>
+                        <th class="py-3 px-6 font-semibold text-slate-300">Subject</th>
+                        <th class="py-3 px-6 font-semibold text-slate-300">Faculty</th>
+                        <th class="py-3 px-6 font-semibold text-slate-300">Download Date</th>
+                        <th class="py-3 px-6 font-semibold text-slate-300 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-zinc-900 divide-y divide-gray-800">
+                    {% for download in downloads %}
+                    <tr class="hover:bg-zinc-800 transition-colors duration-150 ease-in-out">
+                        <td class="py-4 px-6">{{ download.note.title }}</td>
+                        <td class="py-4 px-6">{{ download.note.subject }}</td>
+                        <td class="py-4 px-6">{{ download.note.faculty }}</td>
+                        <td class="py-4 px-6">{{ download.downloaded_at|date:"M d, Y H:i" }}</td>
+                        <td class="py-4 px-6 text-center">
+                            <a href="{% url 'note_preview' download.note.id %}" class="text-blue-400 hover:underline mr-4" target="_blank">Preview</a>
+                            <a href="{% url 'download_note' download.note.id %}" class="text-blue-400 hover:text-blue-500">
+                                <i class='bx bxs-download text-xl'></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="py-4 px-6 text-center text-slate-400">No downloads yet. Start exploring and download your first note!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Responsive Card View for Mobile -->
+        <div class="w-full max-w-6xl sm:hidden">
+            {% for download in downloads %}
+            <div class="mb-4 bg-zinc-800 rounded-lg shadow-md p-4 transition-colors duration-150 ease-in-out">
+                <h2 class="font-semibold text-xl mb-1">{{ download.note.title }}</h2>
+                <p class="text-slate-400 mb-1"><span class="font-semibold text-slate-300">Subject:</span> {{ download.note.subject }}</p>
+                <p class="text-slate-400 mb-1"><span class="font-semibold text-slate-300">Faculty:</span> {{ download.note.faculty }}</p>
+                <p class="text-slate-400 mb-3"><span class="font-semibold text-slate-300">Downloaded:</span> {{ download.downloaded_at|date:"M d, Y H:i" }}</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="{% url 'note_preview' download.note.id %}" class="text-blue-400 hover:underline" target="_blank">Preview</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-slate-400">No downloads yet. Start exploring and download your first note!</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

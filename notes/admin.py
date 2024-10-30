@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Note, Bio, UserInfo, Feedback
+from .models import Note, Bio, UserInfo, Feedback, NoteDownload
 
 # Register your models here.
 @admin.register(Note)
@@ -22,3 +22,7 @@ class UserInfoAdmin(admin.ModelAdmin):
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('author', 'feedback')
+
+@admin.register(NoteDownload)
+class NoteDownloadAdmin(admin.ModelAdmin):
+    list_display = ('user', 'note', 'downloaded_at')

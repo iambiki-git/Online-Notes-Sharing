@@ -40,4 +40,9 @@ class Feedback(models.Model):
     feedback = models.TextField()
 
     
+class NoteDownload(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)
+    downloaded_at = models.DateTimeField(auto_now_add=True)
 
+    

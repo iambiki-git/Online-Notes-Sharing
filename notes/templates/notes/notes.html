@@ -30,7 +30,24 @@
      <!-- Message Section -->
      <p id="resultMessage" class="text-center text-slate-400 mb-4"></p>
 
-    <!-- Notes Section -->
+      {% comment %} <!-- Recommended Notes Section for Old Users -->
+    {% if user.is_authenticated and recommended_notes %}
+    <h2 class="text-xl font-semibold mb-4">Recommended Notes for You</h2>
+    <div id="recommendedNotesContainer" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-8">
+        {% for note in recommended_notes %}
+        <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
+            <h2 class="text-lg font-semibold text-slate-300 mb-2">{{ note.title }}</h2>
+            <p class="text-slate-400 text-sm mb-4">Faculty: {{ note.faculty }}</p>
+            <p class="text-sm text-slate-500">Uploaded on: {{ note.upload_date|date:"M d, Y" }}</p>
+            <a href="{% url 'download_note' note.id %}" class="text-blue-400 hover:text-blue-500">Download</a>
+        </div>
+        {% empty %}
+        <p class="text-slate-400 col-span-full text-center mt-6">No recommended notes found.</p>
+        {% endfor %}
+    </div>
+{% endif %} {% endcomment %}
+
+    {% comment %} <!-- Notes Section -->
     <div id="notesContainer" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for note in notes %}
         <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
@@ -73,7 +90,94 @@
         {% empty %}
         <p class="text-slate-400 col-span-full text-center mt-6">No notes found.</p>
         {% endfor %}
+    </div> {% endcomment %}
+
+    <div id="notesContainer" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {% if user.is_authenticated %}
+            {% if user.date_joined < some_cutoff_date %}
+                {% comment %} <h2 class="text-lg font-semibold">Recommended Notes</h2> {% endcomment %}
+                {% for note in recommended_notes %}
+                    <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
+                        <p class="text-slate-300 text-xl mb-4">{{ note.title }}</p>
+                        <p class="text-slate-400 text-sm mb-4">Faculty: {{ note.faculty }}</p>
+                        <h6 class="text-sm font-semibold text-slate-400 mb-2">Subject: {{ note.subject }}</h6>
+                        <div class="flex justify-between items-center">
+                            <a href="{% url 'note_preview' note.id %}" class="text-blue-400 hover:underline" target="_blank">Preview</a>
+                            <a href="{% url 'download_note' note.id %}" class="text-blue-400 hover:text-blue-500 ml-2">
+                                <i class='bx bxs-download text-xl'></i>
+                            </a>
+                            <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-slate-400 col-span-full text-center mt-6">No recommendations found.</p>
+                {% endfor %}
+            {% else %}
+                {% comment %} <p class="text-slate-400">Welcome! Since you're new, we don't have recommendations for you yet.</p> {% endcomment %}
+
+                {% for note in notes %}
+                    <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
+                        <p class="text-slate-300 text-xl mb-4">{{ note.title }}</p>
+                        <p class="text-slate-400 text-sm mb-4">Faculty: {{ note.faculty }}</p>
+                        <h6 class="text-sm font-semibold text-slate-400 mb-2">Subject: {{ note.subject }}</h6>
+                        <div class="flex justify-between items-center">
+                            <a href="{% url 'note_preview' note.id %}" class="text-blue-400 hover:underline" target="_blank">Preview</a>
+                            <a href="{% url 'download_note' note.id %}" class="text-blue-400 hover:text-blue-500 ml-2">
+                                <i class='bx bxs-download text-xl'></i>
+                            </a>
+                            <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+            {% else %}
+            {% for note in notes %}
+                    <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
+                        <p class="text-slate-300 text-xl mb-4">{{ note.title }}</p>
+                        <p class="text-slate-400 text-sm mb-4">Faculty: {{ note.faculty }}</p>
+                        <h6 class="text-sm font-semibold text-slate-400 mb-2">Subject: {{ note.subject }}</h6>
+                        <div class="flex justify-between items-center">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'note_preview' note.id %}" class="text-blue-400 hover:underline" target="_blank">Preview</a>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'download_note' note.id %}" class="text-blue-400 hover:text-blue-500 ml-2">
+                                <i class='bx bxs-download text-xl'></i>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="text-blue-400 hover:text-blue-500 ml-2">
+                                <i class='bx bxs-download text-xl'></i>
+                            </a>
+                            {% endif %}
+                            <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+        {% endif %}
     </div>
+    
+    <!-- All Notes Section -->
+    {% comment %} <h2 class="text-lg font-semibold">All Notes</h2>
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {% for note in notes %}
+            <div class="bg-zinc-800 hover:bg-zinc-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200 ease-in-out" data-faculty="{{ note.faculty }}">
+                <p class="text-slate-300 text-xl mb-4">{{ note.title }}</p>
+                <p class="text-slate-400 text-sm mb-4">Faculty: {{ note.faculty }}</p>
+                <h6 class="text-xs font-semibold text-slate-400 mb-2">{{ note.subject }}</h6>
+               
+                <div class="flex justify-between items-center">
+                    <a href="{% url 'note_preview' note.id %}" class="text-blue-400 hover:underline" target="_blank">Preview</a>
+                    <a href="{% url 'download_note' note.id %}" class="text-blue-400 hover:text-blue-500 ml-2">
+                        <i class='bx bxs-download text-xl'></i>
+                    </a>
+                    <p class="text-sm text-slate-500">{{ note.upload_date|date:"M d, Y" }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-slate-400 col-span-full text-center mt-6">No notes found.</p>
+        {% endfor %}
+    </div> {% endcomment %}
    
      <!-- Pagination Controls -->
     <div class="flex justify-center mt-8">
@@ -99,7 +203,7 @@
 
 <script>
     
-    let selectedFaculty = 'All'; // Initially set to 'All' to show all notes
+    {% comment %} let selectedFaculty = 'All'; // Initially set to 'All' to show all notes
 
     // Function to handle faculty selection
     function filterByFaculty(faculty) {
@@ -141,8 +245,54 @@
     }
 
     // Event listener for real-time search filtering
-    document.getElementById('searchInput').addEventListener('input', filterNotes);
+    document.getElementById('searchInput').addEventListener('input', filterNotes); {% endcomment %}
 
+    let selectedFaculty = 'All'; // Initially set to 'All' to show all notes
+
+    // Function to handle faculty selection
+    function filterByFaculty(faculty) {
+        selectedFaculty = faculty;
+        filterNotes(); // Call filterNotes to apply the faculty filter
+    }
+    
+    // Function to handle both search and faculty filters
+    function filterNotes() {
+        const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+        const notes = document.querySelectorAll('#notesContainer > div, .grid > div'); // Select all notes from both sections
+        const resultMessage = document.getElementById('resultMessage');
+        let visibleCount = 0; // Counter for visible notes
+    
+        notes.forEach(note => {
+            const faculty = note.getAttribute('data-faculty');
+            const title = note.querySelector('h6').textContent.toLowerCase(); // Select title correctly
+            const subject = note.querySelector('p:nth-of-type(1)').textContent.toLowerCase(); // Select subject correctly
+    
+            // Check if the note matches the selected faculty and search query
+            const matchesFaculty = (selectedFaculty === 'All' || faculty === selectedFaculty);
+            const matchesSearch = (subject.includes(searchQuery) || title.includes(searchQuery));
+    
+            // Display the note only if it matches both the faculty and search query
+            if (matchesFaculty && matchesSearch) {
+                note.style.display = "block";
+                visibleCount++; // Increase count for each visible note
+            } else {
+                note.style.display = "none";
+            }
+        });
+    
+        // Update the result message based on the number of visible notes
+        if (visibleCount === 0) {
+            resultMessage.innerText = "No notes found.";
+        } else {
+            resultMessage.innerText = `${visibleCount} note${visibleCount > 1 ? 's' : ''} found.`;
+        }
+    }
+    
+    // Event listener for real-time search filtering
+    document.getElementById('searchInput').addEventListener('input', filterNotes);
+    
+    
+    
 
 </script>
 {% endblock %}
